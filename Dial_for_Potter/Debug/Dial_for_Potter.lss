@@ -1,0 +1,458 @@
+
+Dial_for_Potter.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000002a0  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000002f4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000002f4  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000324  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  00000360  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000005b1  00000000  00000000  00000398  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000001c2  00000000  00000000  00000949  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000297  00000000  00000000  00000b0b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  0000007c  00000000  00000000  00000da4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000261  00000000  00000000  00000e20  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000001a4  00000000  00000000  00001081  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000028  00000000  00000000  00001225  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	19 c0       	rjmp	.+50     	; 0x36 <__bad_interrupt>
+   4:	18 c0       	rjmp	.+48     	; 0x36 <__bad_interrupt>
+   6:	17 c0       	rjmp	.+46     	; 0x36 <__bad_interrupt>
+   8:	16 c0       	rjmp	.+44     	; 0x36 <__bad_interrupt>
+   a:	15 c0       	rjmp	.+42     	; 0x36 <__bad_interrupt>
+   c:	14 c0       	rjmp	.+40     	; 0x36 <__bad_interrupt>
+   e:	13 c0       	rjmp	.+38     	; 0x36 <__bad_interrupt>
+  10:	12 c0       	rjmp	.+36     	; 0x36 <__bad_interrupt>
+  12:	11 c0       	rjmp	.+34     	; 0x36 <__bad_interrupt>
+  14:	10 c0       	rjmp	.+32     	; 0x36 <__bad_interrupt>
+  16:	0f c0       	rjmp	.+30     	; 0x36 <__bad_interrupt>
+  18:	0e c0       	rjmp	.+28     	; 0x36 <__bad_interrupt>
+  1a:	0d c0       	rjmp	.+26     	; 0x36 <__bad_interrupt>
+  1c:	0c c0       	rjmp	.+24     	; 0x36 <__bad_interrupt>
+  1e:	0b c0       	rjmp	.+22     	; 0x36 <__bad_interrupt>
+  20:	0a c0       	rjmp	.+20     	; 0x36 <__bad_interrupt>
+  22:	09 c0       	rjmp	.+18     	; 0x36 <__bad_interrupt>
+  24:	08 c0       	rjmp	.+16     	; 0x36 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+  32:	53 d0       	rcall	.+166    	; 0xda <main>
+  34:	33 c1       	rjmp	.+614    	; 0x29c <_exit>
+
+00000036 <__bad_interrupt>:
+  36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
+
+00000038 <preset>:
+	}
+}
+
+int isOn(volatile uint8_t port_diod, int pin_diod) {
+	return port_diod & (1 << pin_diod) ? 1 : 0;
+}
+  38:	11 ba       	out	0x11, r1	; 17
+  3a:	8e e3       	ldi	r24, 0x3E	; 62
+  3c:	87 bb       	out	0x17, r24	; 23
+  3e:	8f ef       	ldi	r24, 0xFF	; 255
+  40:	84 bb       	out	0x14, r24	; 20
+  42:	18 ba       	out	0x18, r1	; 24
+  44:	15 ba       	out	0x15, r1	; 21
+  46:	12 ba       	out	0x12, r1	; 18
+  48:	08 95       	ret
+
+0000004a <number>:
+  4a:	0f 93       	push	r16
+  4c:	da 01       	movw	r26, r20
+  4e:	ec 91       	ld	r30, X
+  50:	f0 e0       	ldi	r31, 0x00	; 0
+  52:	08 2e       	mov	r0, r24
+  54:	02 c0       	rjmp	.+4      	; 0x5a <number+0x10>
+  56:	f5 95       	asr	r31
+  58:	e7 95       	ror	r30
+  5a:	0a 94       	dec	r0
+  5c:	e2 f7       	brpl	.-8      	; 0x56 <number+0xc>
+  5e:	e0 fd       	sbrc	r30, 0
+  60:	3a c0       	rjmp	.+116    	; 0xd6 <number+0x8c>
+  62:	e7 e9       	ldi	r30, 0x97	; 151
+  64:	fa e3       	ldi	r31, 0x3A	; 58
+  66:	31 97       	sbiw	r30, 0x01	; 1
+  68:	f1 f7       	brne	.-4      	; 0x66 <number+0x1c>
+  6a:	00 c0       	rjmp	.+0      	; 0x6c <number+0x22>
+  6c:	00 00       	nop
+  6e:	4c 91       	ld	r20, X
+  70:	50 e0       	ldi	r21, 0x00	; 0
+  72:	fa 01       	movw	r30, r20
+  74:	02 c0       	rjmp	.+4      	; 0x7a <number+0x30>
+  76:	f5 95       	asr	r31
+  78:	e7 95       	ror	r30
+  7a:	8a 95       	dec	r24
+  7c:	e2 f7       	brpl	.-8      	; 0x76 <number+0x2c>
+  7e:	e0 fd       	sbrc	r30, 0
+  80:	2a c0       	rjmp	.+84     	; 0xd6 <number+0x8c>
+  82:	db 01       	movw	r26, r22
+  84:	8d 91       	ld	r24, X+
+  86:	9c 91       	ld	r25, X
+  88:	11 97       	sbiw	r26, 0x01	; 1
+  8a:	81 30       	cpi	r24, 0x01	; 1
+  8c:	91 05       	cpc	r25, r1
+  8e:	81 f4       	brne	.+32     	; 0xb0 <number+0x66>
+  90:	f9 01       	movw	r30, r18
+  92:	40 81       	ld	r20, Z
+  94:	81 e0       	ldi	r24, 0x01	; 1
+  96:	90 e0       	ldi	r25, 0x00	; 0
+  98:	02 c0       	rjmp	.+4      	; 0x9e <number+0x54>
+  9a:	88 0f       	add	r24, r24
+  9c:	99 1f       	adc	r25, r25
+  9e:	0a 95       	dec	r16
+  a0:	e2 f7       	brpl	.-8      	; 0x9a <number+0x50>
+  a2:	84 2b       	or	r24, r20
+  a4:	80 83       	st	Z, r24
+  a6:	82 e0       	ldi	r24, 0x02	; 2
+  a8:	90 e0       	ldi	r25, 0x00	; 0
+  aa:	8d 93       	st	X+, r24
+  ac:	9c 93       	st	X, r25
+  ae:	13 c0       	rjmp	.+38     	; 0xd6 <number+0x8c>
+  b0:	02 97       	sbiw	r24, 0x02	; 2
+  b2:	89 f4       	brne	.+34     	; 0xd6 <number+0x8c>
+  b4:	d9 01       	movw	r26, r18
+  b6:	9c 91       	ld	r25, X
+  b8:	e1 e0       	ldi	r30, 0x01	; 1
+  ba:	f0 e0       	ldi	r31, 0x00	; 0
+  bc:	af 01       	movw	r20, r30
+  be:	02 c0       	rjmp	.+4      	; 0xc4 <number+0x7a>
+  c0:	44 0f       	add	r20, r20
+  c2:	55 1f       	adc	r21, r21
+  c4:	0a 95       	dec	r16
+  c6:	e2 f7       	brpl	.-8      	; 0xc0 <number+0x76>
+  c8:	84 2f       	mov	r24, r20
+  ca:	80 95       	com	r24
+  cc:	89 23       	and	r24, r25
+  ce:	8c 93       	st	X, r24
+  d0:	db 01       	movw	r26, r22
+  d2:	ed 93       	st	X+, r30
+  d4:	fc 93       	st	X, r31
+  d6:	0f 91       	pop	r16
+  d8:	08 95       	ret
+
+000000da <main>:
+
+int main (void)
+{
+  da:	cf 93       	push	r28
+  dc:	df 93       	push	r29
+  de:	cd b7       	in	r28, 0x3d	; 61
+  e0:	de b7       	in	r29, 0x3e	; 62
+  e2:	6e 97       	sbiw	r28, 0x1e	; 30
+  e4:	0f b6       	in	r0, 0x3f	; 63
+  e6:	f8 94       	cli
+  e8:	de bf       	out	0x3e, r29	; 62
+  ea:	0f be       	out	0x3f, r0	; 63
+  ec:	cd bf       	out	0x3d, r28	; 61
+	preset();
+  ee:	a4 df       	rcall	.-184    	; 0x38 <preset>
+	int number1 = 0, number2 = 1, number3 = 2, number4 = 3, number5 = 4, number6 = 6, number7 = 7, number8 = 5, number9 = 6, number10 = 7;
+	int switcher1 = 1, switcher2 = 1, switcher3 = 1, switcher4 = 1, switcher5 = 1, switcher6 = 1, switcher7 = 1, switcher8 = 1, switcher9 = 1, switcher10 = 1;
+  f0:	81 e0       	ldi	r24, 0x01	; 1
+  f2:	90 e0       	ldi	r25, 0x00	; 0
+  f4:	9a 83       	std	Y+2, r25	; 0x02
+  f6:	89 83       	std	Y+1, r24	; 0x01
+  f8:	9c 83       	std	Y+4, r25	; 0x04
+  fa:	8b 83       	std	Y+3, r24	; 0x03
+  fc:	9e 83       	std	Y+6, r25	; 0x06
+  fe:	8d 83       	std	Y+5, r24	; 0x05
+ 100:	98 87       	std	Y+8, r25	; 0x08
+ 102:	8f 83       	std	Y+7, r24	; 0x07
+ 104:	9a 87       	std	Y+10, r25	; 0x0a
+ 106:	89 87       	std	Y+9, r24	; 0x09
+ 108:	9c 87       	std	Y+12, r25	; 0x0c
+ 10a:	8b 87       	std	Y+11, r24	; 0x0b
+ 10c:	9e 87       	std	Y+14, r25	; 0x0e
+ 10e:	8d 87       	std	Y+13, r24	; 0x0d
+ 110:	98 8b       	std	Y+16, r25	; 0x10
+ 112:	8f 87       	std	Y+15, r24	; 0x0f
+ 114:	9a 8b       	std	Y+18, r25	; 0x12
+ 116:	89 8b       	std	Y+17, r24	; 0x11
+ 118:	9c 8b       	std	Y+20, r25	; 0x14
+ 11a:	8b 8b       	std	Y+19, r24	; 0x13
+	while(1) {
+		if (isOn(PINB, 0) == 1) {
+			number(number1, &switcher1, &PIND, &PORTC, PINC4);
+			number(number2, &switcher2, &PIND, &PORTC, PINC3);
+ 11c:	ce 01       	movw	r24, r28
+ 11e:	03 96       	adiw	r24, 0x03	; 3
+ 120:	9e 8b       	std	Y+22, r25	; 0x16
+ 122:	8d 8b       	std	Y+21, r24	; 0x15
+ 124:	9d 89       	ldd	r25, Y+21	; 0x15
+ 126:	9d 8f       	std	Y+29, r25	; 0x1d
+ 128:	2e 89       	ldd	r18, Y+22	; 0x16
+ 12a:	2e 8f       	std	Y+30, r18	; 0x1e
+ 12c:	8d 8d       	ldd	r24, Y+29	; 0x1d
+ 12e:	8b 8f       	std	Y+27, r24	; 0x1b
+ 130:	9e 8d       	ldd	r25, Y+30	; 0x1e
+ 132:	9c 8f       	std	Y+28, r25	; 0x1c
+ 134:	2b 8d       	ldd	r18, Y+27	; 0x1b
+ 136:	29 8f       	std	Y+25, r18	; 0x19
+ 138:	8c 8d       	ldd	r24, Y+28	; 0x1c
+ 13a:	8a 8f       	std	Y+26, r24	; 0x1a
+ 13c:	29 8c       	ldd	r2, Y+25	; 0x19
+ 13e:	3a 8c       	ldd	r3, Y+26	; 0x1a
+			number(number3, &switcher3, &PIND, &PORTC, PINC2);
+ 140:	2e 01       	movw	r4, r28
+ 142:	95 e0       	ldi	r25, 0x05	; 5
+ 144:	49 0e       	add	r4, r25
+ 146:	51 1c       	adc	r5, r1
+ 148:	4f 8a       	std	Y+23, r4	; 0x17
+ 14a:	58 8e       	std	Y+24, r5	; 0x18
+			number(number4, &switcher4, &PIND, &PORTC, PINC1);
+ 14c:	5e 01       	movw	r10, r28
+ 14e:	27 e0       	ldi	r18, 0x07	; 7
+ 150:	a2 0e       	add	r10, r18
+ 152:	b1 1c       	adc	r11, r1
+	int switcher1 = 1, switcher2 = 1, switcher3 = 1, switcher4 = 1, switcher5 = 1, switcher6 = 1, switcher7 = 1, switcher8 = 1, switcher9 = 1, switcher10 = 1;
+	while(1) {
+		if (isOn(PINB, 0) == 1) {
+			number(number1, &switcher1, &PIND, &PORTC, PINC4);
+			number(number2, &switcher2, &PIND, &PORTC, PINC3);
+			number(number3, &switcher3, &PIND, &PORTC, PINC2);
+ 154:	ef 88       	ldd	r14, Y+23	; 0x17
+ 156:	f8 8c       	ldd	r15, Y+24	; 0x18
+			number(number4, &switcher4, &PIND, &PORTC, PINC1);
+			number(number5, &switcher5, &PIND, &PORTC, PINC0);
+ 158:	3e 01       	movw	r6, r28
+ 15a:	89 e0       	ldi	r24, 0x09	; 9
+ 15c:	68 0e       	add	r6, r24
+ 15e:	71 1c       	adc	r7, r1
+	while(1) {
+		if (isOn(PINB, 0) == 1) {
+			number(number1, &switcher1, &PIND, &PORTC, PINC4);
+			number(number2, &switcher2, &PIND, &PORTC, PINC3);
+			number(number3, &switcher3, &PIND, &PORTC, PINC2);
+			number(number4, &switcher4, &PIND, &PORTC, PINC1);
+ 160:	ca 2c       	mov	r12, r10
+ 162:	db 2c       	mov	r13, r11
+			number(number5, &switcher5, &PIND, &PORTC, PINC0);
+ 164:	86 2c       	mov	r8, r6
+ 166:	97 2c       	mov	r9, r7
+{
+	preset();
+	int number1 = 0, number2 = 1, number3 = 2, number4 = 3, number5 = 4, number6 = 6, number7 = 7, number8 = 5, number9 = 6, number10 = 7;
+	int switcher1 = 1, switcher2 = 1, switcher3 = 1, switcher4 = 1, switcher5 = 1, switcher6 = 1, switcher7 = 1, switcher8 = 1, switcher9 = 1, switcher10 = 1;
+	while(1) {
+		if (isOn(PINB, 0) == 1) {
+ 168:	b0 9b       	sbis	0x16, 0	; 22
+ 16a:	fe cf       	rjmp	.-4      	; 0x168 <main+0x8e>
+			number(number1, &switcher1, &PIND, &PORTC, PINC4);
+ 16c:	04 e0       	ldi	r16, 0x04	; 4
+ 16e:	10 e0       	ldi	r17, 0x00	; 0
+ 170:	25 e3       	ldi	r18, 0x35	; 53
+ 172:	30 e0       	ldi	r19, 0x00	; 0
+ 174:	40 e3       	ldi	r20, 0x30	; 48
+ 176:	50 e0       	ldi	r21, 0x00	; 0
+ 178:	be 01       	movw	r22, r28
+ 17a:	6f 5f       	subi	r22, 0xFF	; 255
+ 17c:	7f 4f       	sbci	r23, 0xFF	; 255
+ 17e:	80 e0       	ldi	r24, 0x00	; 0
+ 180:	90 e0       	ldi	r25, 0x00	; 0
+ 182:	63 df       	rcall	.-314    	; 0x4a <number>
+			number(number2, &switcher2, &PIND, &PORTC, PINC3);
+ 184:	03 e0       	ldi	r16, 0x03	; 3
+ 186:	10 e0       	ldi	r17, 0x00	; 0
+ 188:	25 e3       	ldi	r18, 0x35	; 53
+ 18a:	30 e0       	ldi	r19, 0x00	; 0
+ 18c:	40 e3       	ldi	r20, 0x30	; 48
+ 18e:	50 e0       	ldi	r21, 0x00	; 0
+ 190:	62 2d       	mov	r22, r2
+ 192:	73 2d       	mov	r23, r3
+ 194:	81 e0       	ldi	r24, 0x01	; 1
+ 196:	90 e0       	ldi	r25, 0x00	; 0
+ 198:	58 df       	rcall	.-336    	; 0x4a <number>
+			number(number3, &switcher3, &PIND, &PORTC, PINC2);
+ 19a:	02 e0       	ldi	r16, 0x02	; 2
+ 19c:	10 e0       	ldi	r17, 0x00	; 0
+ 19e:	25 e3       	ldi	r18, 0x35	; 53
+ 1a0:	30 e0       	ldi	r19, 0x00	; 0
+ 1a2:	40 e3       	ldi	r20, 0x30	; 48
+ 1a4:	50 e0       	ldi	r21, 0x00	; 0
+ 1a6:	6e 2d       	mov	r22, r14
+ 1a8:	7f 2d       	mov	r23, r15
+ 1aa:	82 e0       	ldi	r24, 0x02	; 2
+ 1ac:	90 e0       	ldi	r25, 0x00	; 0
+ 1ae:	4d df       	rcall	.-358    	; 0x4a <number>
+			number(number4, &switcher4, &PIND, &PORTC, PINC1);
+ 1b0:	01 e0       	ldi	r16, 0x01	; 1
+ 1b2:	10 e0       	ldi	r17, 0x00	; 0
+ 1b4:	25 e3       	ldi	r18, 0x35	; 53
+ 1b6:	30 e0       	ldi	r19, 0x00	; 0
+ 1b8:	40 e3       	ldi	r20, 0x30	; 48
+ 1ba:	50 e0       	ldi	r21, 0x00	; 0
+ 1bc:	6c 2d       	mov	r22, r12
+ 1be:	7d 2d       	mov	r23, r13
+ 1c0:	83 e0       	ldi	r24, 0x03	; 3
+ 1c2:	90 e0       	ldi	r25, 0x00	; 0
+ 1c4:	42 df       	rcall	.-380    	; 0x4a <number>
+			number(number5, &switcher5, &PIND, &PORTC, PINC0);
+ 1c6:	00 e0       	ldi	r16, 0x00	; 0
+ 1c8:	10 e0       	ldi	r17, 0x00	; 0
+ 1ca:	25 e3       	ldi	r18, 0x35	; 53
+ 1cc:	30 e0       	ldi	r19, 0x00	; 0
+ 1ce:	40 e3       	ldi	r20, 0x30	; 48
+ 1d0:	50 e0       	ldi	r21, 0x00	; 0
+ 1d2:	68 2d       	mov	r22, r8
+ 1d4:	79 2d       	mov	r23, r9
+ 1d6:	84 e0       	ldi	r24, 0x04	; 4
+ 1d8:	90 e0       	ldi	r25, 0x00	; 0
+ 1da:	37 df       	rcall	.-402    	; 0x4a <number>
+			number(number6, &switcher6, &PINB, &PORTC, PINC5);
+ 1dc:	05 e0       	ldi	r16, 0x05	; 5
+ 1de:	10 e0       	ldi	r17, 0x00	; 0
+ 1e0:	25 e3       	ldi	r18, 0x35	; 53
+ 1e2:	30 e0       	ldi	r19, 0x00	; 0
+ 1e4:	46 e3       	ldi	r20, 0x36	; 54
+ 1e6:	50 e0       	ldi	r21, 0x00	; 0
+ 1e8:	be 01       	movw	r22, r28
+ 1ea:	65 5f       	subi	r22, 0xF5	; 245
+ 1ec:	7f 4f       	sbci	r23, 0xFF	; 255
+ 1ee:	86 e0       	ldi	r24, 0x06	; 6
+ 1f0:	90 e0       	ldi	r25, 0x00	; 0
+ 1f2:	2b df       	rcall	.-426    	; 0x4a <number>
+			number(number7, &switcher7, &PINB, &PORTB, PINB5);
+ 1f4:	28 e3       	ldi	r18, 0x38	; 56
+ 1f6:	30 e0       	ldi	r19, 0x00	; 0
+ 1f8:	46 e3       	ldi	r20, 0x36	; 54
+ 1fa:	50 e0       	ldi	r21, 0x00	; 0
+ 1fc:	be 01       	movw	r22, r28
+ 1fe:	63 5f       	subi	r22, 0xF3	; 243
+ 200:	7f 4f       	sbci	r23, 0xFF	; 255
+ 202:	87 e0       	ldi	r24, 0x07	; 7
+ 204:	90 e0       	ldi	r25, 0x00	; 0
+ 206:	21 df       	rcall	.-446    	; 0x4a <number>
+			number(number8, &switcher8, &PIND, &PORTB, PINB4);
+ 208:	04 e0       	ldi	r16, 0x04	; 4
+ 20a:	10 e0       	ldi	r17, 0x00	; 0
+ 20c:	28 e3       	ldi	r18, 0x38	; 56
+ 20e:	30 e0       	ldi	r19, 0x00	; 0
+ 210:	40 e3       	ldi	r20, 0x30	; 48
+ 212:	50 e0       	ldi	r21, 0x00	; 0
+ 214:	be 01       	movw	r22, r28
+ 216:	61 5f       	subi	r22, 0xF1	; 241
+ 218:	7f 4f       	sbci	r23, 0xFF	; 255
+ 21a:	85 e0       	ldi	r24, 0x05	; 5
+ 21c:	90 e0       	ldi	r25, 0x00	; 0
+ 21e:	15 df       	rcall	.-470    	; 0x4a <number>
+			number(number9, &switcher9, &PIND, &PORTB, PINB3);
+ 220:	03 e0       	ldi	r16, 0x03	; 3
+ 222:	10 e0       	ldi	r17, 0x00	; 0
+ 224:	28 e3       	ldi	r18, 0x38	; 56
+ 226:	30 e0       	ldi	r19, 0x00	; 0
+ 228:	40 e3       	ldi	r20, 0x30	; 48
+ 22a:	50 e0       	ldi	r21, 0x00	; 0
+ 22c:	be 01       	movw	r22, r28
+ 22e:	6f 5e       	subi	r22, 0xEF	; 239
+ 230:	7f 4f       	sbci	r23, 0xFF	; 255
+ 232:	86 e0       	ldi	r24, 0x06	; 6
+ 234:	90 e0       	ldi	r25, 0x00	; 0
+ 236:	09 df       	rcall	.-494    	; 0x4a <number>
+			number(number10, &switcher10, &PIND, &PORTB, PINB2);
+ 238:	02 e0       	ldi	r16, 0x02	; 2
+ 23a:	10 e0       	ldi	r17, 0x00	; 0
+ 23c:	28 e3       	ldi	r18, 0x38	; 56
+ 23e:	30 e0       	ldi	r19, 0x00	; 0
+ 240:	40 e3       	ldi	r20, 0x30	; 48
+ 242:	50 e0       	ldi	r21, 0x00	; 0
+ 244:	be 01       	movw	r22, r28
+ 246:	6d 5e       	subi	r22, 0xED	; 237
+ 248:	7f 4f       	sbci	r23, 0xFF	; 255
+ 24a:	87 e0       	ldi	r24, 0x07	; 7
+ 24c:	90 e0       	ldi	r25, 0x00	; 0
+ 24e:	fd de       	rcall	.-518    	; 0x4a <number>
+			
+			if (isOn(PORTC, PINC4) == 0 &&
+ 250:	ac 99       	sbic	0x15, 4	; 21
+ 252:	8a cf       	rjmp	.-236    	; 0x168 <main+0x8e>
+ 254:	ab 99       	sbic	0x15, 3	; 21
+ 256:	88 cf       	rjmp	.-240    	; 0x168 <main+0x8e>
+			isOn(PORTC, PINC3) == 0 &&
+ 258:	aa 99       	sbic	0x15, 2	; 21
+ 25a:	84 cf       	rjmp	.-248    	; 0x164 <main+0x8a>
+			isOn(PORTC, PINC2) == 0 &&
+ 25c:	a9 9b       	sbis	0x15, 1	; 21
+ 25e:	7c cf       	rjmp	.-264    	; 0x158 <main+0x7e>
+			isOn(PORTC, PINC1) == 1 && // 4 is on
+ 260:	a8 99       	sbic	0x15, 0	; 21
+ 262:	74 cf       	rjmp	.-280    	; 0x14c <main+0x72>
+			isOn(PORTC, PINC0) == 0 &&
+ 264:	ad 99       	sbic	0x15, 5	; 21
+ 266:	70 cf       	rjmp	.-288    	; 0x148 <main+0x6e>
+			isOn(PORTC, PINC5) == 0 &&
+ 268:	c5 99       	sbic	0x18, 5	; 24
+ 26a:	6a cf       	rjmp	.-300    	; 0x140 <main+0x66>
+			isOn(PORTB, PINB5) == 0 &&
+ 26c:	c4 9b       	sbis	0x18, 4	; 24
+ 26e:	66 cf       	rjmp	.-308    	; 0x13c <main+0x62>
+			isOn(PORTB, PINB4) == 1 && // 8 is on
+ 270:	c3 99       	sbic	0x18, 3	; 24
+ 272:	60 cf       	rjmp	.-320    	; 0x134 <main+0x5a>
+			isOn(PORTB, PINB3) == 0 &&
+ 274:	c2 99       	sbic	0x18, 2	; 24
+ 276:	5a cf       	rjmp	.-332    	; 0x12c <main+0x52>
+			isOn(PORTB, PINB2) == 0){
+				PORTB = 0x00;
+ 278:	18 ba       	out	0x18, r1	; 24
+				PORTC = 0x00;
+ 27a:	15 ba       	out	0x15, r1	; 21
+				PORTD = 0x00;
+ 27c:	12 ba       	out	0x12, r1	; 18
+				PORTB |= /*(1 << PINB0)|*/(1 << PINB1);
+ 27e:	c1 9a       	sbi	0x18, 1	; 24
+				PORTB |= (1<<PINB4);
+ 280:	c4 9a       	sbi	0x18, 4	; 24
+				PORTC |= (1<<PINC1);
+ 282:	a9 9a       	sbi	0x15, 1	; 21
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 284:	9f e3       	ldi	r25, 0x3F	; 63
+ 286:	22 e4       	ldi	r18, 0x42	; 66
+ 288:	8f e0       	ldi	r24, 0x0F	; 15
+ 28a:	91 50       	subi	r25, 0x01	; 1
+ 28c:	20 40       	sbci	r18, 0x00	; 0
+ 28e:	80 40       	sbci	r24, 0x00	; 0
+ 290:	e1 f7       	brne	.-8      	; 0x28a <main+0x1b0>
+ 292:	00 c0       	rjmp	.+0      	; 0x294 <main+0x1ba>
+ 294:	00 00       	nop
+				_delay_ms(5000);
+				PORTB &= ~(1<<PINB4);
+ 296:	c4 98       	cbi	0x18, 4	; 24
+				PORTC &= ~(1<<PINC1);
+ 298:	a9 98       	cbi	0x15, 1	; 21
+ 29a:	44 cf       	rjmp	.-376    	; 0x124 <main+0x4a>
+
+0000029c <_exit>:
+ 29c:	f8 94       	cli
+
+0000029e <__stop_program>:
+ 29e:	ff cf       	rjmp	.-2      	; 0x29e <__stop_program>

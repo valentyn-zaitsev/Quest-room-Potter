@@ -1,0 +1,864 @@
+
+Main_atmega16.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000055e  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000005d2  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000028  00800060  00800060  000005d2  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000005d2  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000604  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000058  00000000  00000000  00000640  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000783  00000000  00000000  00000698  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000021e  00000000  00000000  00000e1b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000607  00000000  00000000  00001039  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000094  00000000  00000000  00001640  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000002ab  00000000  00000000  000016d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000034c  00000000  00000000  0000197f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000038  00000000  00000000  00001ccb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__vector_11>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a8 38       	cpi	r26, 0x88	; 136
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 cb 00 	call	0x196	; 0x196 <main>
+  74:	0c 94 ad 02 	jmp	0x55a	; 0x55a <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <port_init>:
+int podarok = 0;
+int second_room = 0;
+
+void port_init (void)
+{
+	DDRD &= ~((1<<PIND7)|(1<<PIND6)|(1<<PIND5)|(1<<PIND4)|(1<<PIND3)|(1<<PIND2));
+  7c:	81 b3       	in	r24, 0x11	; 17
+  7e:	83 70       	andi	r24, 0x03	; 3
+  80:	81 bb       	out	0x11, r24	; 17
+	//PORTD &= ~(1<<PIND7);
+	
+	DDRC &= ~((1<<PINC0)|(1<<PINC1)|(1<<PINC2)|(1<<PINC3));
+  82:	84 b3       	in	r24, 0x14	; 20
+  84:	80 7f       	andi	r24, 0xF0	; 240
+  86:	84 bb       	out	0x14, r24	; 20
+	DDRC |= (1<<PINC7);
+  88:	a7 9a       	sbi	0x14, 7	; 20
+	PORTC &= ~(1<<PINC7);
+  8a:	af 98       	cbi	0x15, 7	; 21
+	
+	DDRA &= ~((1<<PINA3)|(1<<PINA4)|(1<<PINA5)|(1<<PINA6)|(1<<PINA7));
+  8c:	8a b3       	in	r24, 0x1a	; 26
+  8e:	87 70       	andi	r24, 0x07	; 7
+  90:	8a bb       	out	0x1a, r24	; 26
+	DDRA |= (1<<PINA0)|(1<<PINA1)|(1<<PINA2);//RGB казана
+  92:	8a b3       	in	r24, 0x1a	; 26
+  94:	87 60       	ori	r24, 0x07	; 7
+  96:	8a bb       	out	0x1a, r24	; 26
+	PORTA &= ~((1<<PINA0)|(1<<PINA1)|(1<<PINA2));
+  98:	8b b3       	in	r24, 0x1b	; 27
+  9a:	88 7f       	andi	r24, 0xF8	; 248
+  9c:	8b bb       	out	0x1b, r24	; 27
+	
+	DDRB &= ~((1<<PINB1)|(1<<PINB2)|(1<<PINB3));
+  9e:	87 b3       	in	r24, 0x17	; 23
+  a0:	81 7f       	andi	r24, 0xF1	; 241
+  a2:	87 bb       	out	0x17, r24	; 23
+	DDRB |= (1<<PINB0)|(1<<PINB4)|(1<<PINB7);//подарок, казан, сигнал открытия шахмат
+  a4:	87 b3       	in	r24, 0x17	; 23
+  a6:	81 69       	ori	r24, 0x91	; 145
+  a8:	87 bb       	out	0x17, r24	; 23
+	PORTB &= ~((1<<PINB0)|(1<<PINB4)|(1<<PINB7));
+  aa:	88 b3       	in	r24, 0x18	; 24
+  ac:	8e 76       	andi	r24, 0x6E	; 110
+  ae:	88 bb       	out	0x18, r24	; 24
+  b0:	08 95       	ret
+
+000000b2 <__vector_11>:
+	//PORTC &= ~((1<<PINC0)|(1<<PINC1)|(1<<PINC2)|(1<<PINC3));
+}
+
+ISR(USART_RXC_vect){
+  b2:	1f 92       	push	r1
+  b4:	0f 92       	push	r0
+  b6:	0f b6       	in	r0, 0x3f	; 63
+  b8:	0f 92       	push	r0
+  ba:	11 24       	eor	r1, r1
+  bc:	2f 93       	push	r18
+  be:	8f 93       	push	r24
+  c0:	9f 93       	push	r25
+	
+	
+	if (UDR == 5){//Казан, Добби, шкатулки
+  c2:	8c b1       	in	r24, 0x0c	; 12
+  c4:	85 30       	cpi	r24, 0x05	; 5
+  c6:	09 f4       	brne	.+2      	; 0xca <__vector_11+0x18>
+		PORTB |= (1<<PINB4);
+  c8:	c4 9a       	sbi	0x18, 4	; 24
+	}
+	
+	if (dobby_free == 1 || kniga == 1 || zaslonka_labirinta == 1 || sunduk == 1 || banochka_zeliya == 1 || nagatie_kirpicha == 1 || kirpichi_razgadany == 1){
+  ca:	80 91 86 00 	lds	r24, 0x0086
+  ce:	90 91 87 00 	lds	r25, 0x0087
+  d2:	01 97       	sbiw	r24, 0x01	; 1
+  d4:	21 f1       	breq	.+72     	; 0x11e <__vector_11+0x6c>
+  d6:	80 91 7c 00 	lds	r24, 0x007C
+  da:	90 91 7d 00 	lds	r25, 0x007D
+  de:	01 97       	sbiw	r24, 0x01	; 1
+  e0:	f1 f0       	breq	.+60     	; 0x11e <__vector_11+0x6c>
+  e2:	80 91 78 00 	lds	r24, 0x0078
+  e6:	90 91 79 00 	lds	r25, 0x0079
+  ea:	01 97       	sbiw	r24, 0x01	; 1
+  ec:	c1 f0       	breq	.+48     	; 0x11e <__vector_11+0x6c>
+  ee:	80 91 76 00 	lds	r24, 0x0076
+  f2:	90 91 77 00 	lds	r25, 0x0077
+  f6:	01 97       	sbiw	r24, 0x01	; 1
+  f8:	91 f0       	breq	.+36     	; 0x11e <__vector_11+0x6c>
+  fa:	80 91 74 00 	lds	r24, 0x0074
+  fe:	90 91 75 00 	lds	r25, 0x0075
+ 102:	01 97       	sbiw	r24, 0x01	; 1
+ 104:	61 f0       	breq	.+24     	; 0x11e <__vector_11+0x6c>
+ 106:	80 91 70 00 	lds	r24, 0x0070
+ 10a:	90 91 71 00 	lds	r25, 0x0071
+ 10e:	01 97       	sbiw	r24, 0x01	; 1
+ 110:	31 f0       	breq	.+12     	; 0x11e <__vector_11+0x6c>
+ 112:	80 91 6e 00 	lds	r24, 0x006E
+ 116:	90 91 6f 00 	lds	r25, 0x006F
+ 11a:	01 97       	sbiw	r24, 0x01	; 1
+ 11c:	b9 f4       	brne	.+46     	; 0x14c <__vector_11+0x9a>
+		if (UDR == 3){//RED
+ 11e:	8c b1       	in	r24, 0x0c	; 12
+ 120:	83 30       	cpi	r24, 0x03	; 3
+ 122:	21 f4       	brne	.+8      	; 0x12c <__vector_11+0x7a>
+		PORTA |= (1<<PINA0);
+ 124:	d8 9a       	sbi	0x1b, 0	; 27
+		PORTA &= ~((1<<PINA1)|(1<<PINA2));
+ 126:	8b b3       	in	r24, 0x1b	; 27
+ 128:	89 7f       	andi	r24, 0xF9	; 249
+ 12a:	8b bb       	out	0x1b, r24	; 27
+		}
+	
+		if (UDR == 1){//GREEN
+ 12c:	8c b1       	in	r24, 0x0c	; 12
+ 12e:	81 30       	cpi	r24, 0x01	; 1
+ 130:	21 f4       	brne	.+8      	; 0x13a <__vector_11+0x88>
+		PORTA |= (1<<PINA1);
+ 132:	d9 9a       	sbi	0x1b, 1	; 27
+		PORTA &= ~((1<<PINA0)|(1<<PINA2));
+ 134:	8b b3       	in	r24, 0x1b	; 27
+ 136:	8a 7f       	andi	r24, 0xFA	; 250
+ 138:	8b bb       	out	0x1b, r24	; 27
+		}
+		
+		if (UDR == 2){//BLUE
+ 13a:	8c b1       	in	r24, 0x0c	; 12
+ 13c:	82 30       	cpi	r24, 0x02	; 2
+ 13e:	21 f4       	brne	.+8      	; 0x148 <__vector_11+0x96>
+		PORTA |= (1<<PINA2);
+ 140:	da 9a       	sbi	0x1b, 2	; 27
+		PORTA &= ~((1<<PINA0)|(1<<PINA1));
+ 142:	8b b3       	in	r24, 0x1b	; 27
+ 144:	8c 7f       	andi	r24, 0xFC	; 252
+ 146:	8b bb       	out	0x1b, r24	; 27
+		}
+		
+		if (UDR == 0){//CLEAR LED
+ 148:	8c b1       	in	r24, 0x0c	; 12
+ 14a:	03 c0       	rjmp	.+6      	; 0x152 <__vector_11+0xa0>
+			}*/
+
+			//PORTA &= ~((1<<PINA0)|(1<<PINA1)|(1<<PINA2));
+		}	
+	}else{
+		PORTA &= ~((1<<PINA0)|(1<<PINA1)|(1<<PINA2));
+ 14c:	8b b3       	in	r24, 0x1b	; 27
+ 14e:	88 7f       	andi	r24, 0xF8	; 248
+ 150:	8b bb       	out	0x1b, r24	; 27
+		}
+		
+	if (UDR == 4){//подарок
+ 152:	8c b1       	in	r24, 0x0c	; 12
+ 154:	84 30       	cpi	r24, 0x04	; 4
+ 156:	b9 f4       	brne	.+46     	; 0x186 <__vector_11+0xd4>
+		if (podarok == 0){
+ 158:	80 91 62 00 	lds	r24, 0x0062
+ 15c:	90 91 63 00 	lds	r25, 0x0063
+ 160:	89 2b       	or	r24, r25
+ 162:	89 f4       	brne	.+34     	; 0x186 <__vector_11+0xd4>
+			PORTB |= (1<<PINB0);
+ 164:	c0 9a       	sbi	0x18, 0	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 166:	2f ef       	ldi	r18, 0xFF	; 255
+ 168:	84 e3       	ldi	r24, 0x34	; 52
+ 16a:	9c e0       	ldi	r25, 0x0C	; 12
+ 16c:	21 50       	subi	r18, 0x01	; 1
+ 16e:	80 40       	sbci	r24, 0x00	; 0
+ 170:	90 40       	sbci	r25, 0x00	; 0
+ 172:	e1 f7       	brne	.-8      	; 0x16c <__vector_11+0xba>
+ 174:	00 c0       	rjmp	.+0      	; 0x176 <__vector_11+0xc4>
+ 176:	00 00       	nop
+			_delay_ms(500);
+			PORTB &= ~(1<<PINB0);
+ 178:	c0 98       	cbi	0x18, 0	; 24
+			podarok = 1;
+ 17a:	81 e0       	ldi	r24, 0x01	; 1
+ 17c:	90 e0       	ldi	r25, 0x00	; 0
+ 17e:	90 93 63 00 	sts	0x0063, r25
+ 182:	80 93 62 00 	sts	0x0062, r24
+		}
+	}
+}
+ 186:	9f 91       	pop	r25
+ 188:	8f 91       	pop	r24
+ 18a:	2f 91       	pop	r18
+ 18c:	0f 90       	pop	r0
+ 18e:	0f be       	out	0x3f, r0	; 63
+ 190:	0f 90       	pop	r0
+ 192:	1f 90       	pop	r1
+ 194:	18 95       	reti
+
+00000196 <main>:
+
+int main(void)
+{
+	port_init();
+ 196:	0e 94 3e 00 	call	0x7c	; 0x7c <port_init>
+    USART_Init(34);//28800
+ 19a:	82 e2       	ldi	r24, 0x22	; 34
+ 19c:	90 e0       	ldi	r25, 0x00	; 0
+ 19e:	0e 94 a0 02 	call	0x540	; 0x540 <USART_Init>
+	sei();
+ 1a2:	78 94       	sei
+	PORTA &= ~((1<<PINA0)|(1<<PINA1)|(1<<PINA2));//светодиод в казане
+ 1a4:	8b b3       	in	r24, 0x1b	; 27
+ 1a6:	88 7f       	andi	r24, 0xF8	; 248
+ 1a8:	8b bb       	out	0x1b, r24	; 27
+ 1aa:	2f ef       	ldi	r18, 0xFF	; 255
+ 1ac:	89 e6       	ldi	r24, 0x69	; 105
+ 1ae:	98 e1       	ldi	r25, 0x18	; 24
+ 1b0:	21 50       	subi	r18, 0x01	; 1
+ 1b2:	80 40       	sbci	r24, 0x00	; 0
+ 1b4:	90 40       	sbci	r25, 0x00	; 0
+ 1b6:	e1 f7       	brne	.-8      	; 0x1b0 <main+0x1a>
+ 1b8:	00 c0       	rjmp	.+0      	; 0x1ba <main+0x24>
+ 1ba:	00 00       	nop
+			_delay_ms(3000);
+			if (zaslonka_labirinta == 1 && shkatulka_dobby == 1 && kirpichi_razgadany == 1){
+				//_delay_ms(5000);
+				PORTB |= (1<<PINB7);//сигнал открывающий шахматы
+				PORTA &= ~((1<<PINA0)|(1<<PINA1)|(1<<PINA2));
+				second_room = 1;
+ 1bc:	01 e0       	ldi	r16, 0x01	; 1
+ 1be:	10 e0       	ldi	r17, 0x00	; 0
+ 1c0:	d0 2f       	mov	r29, r16
+ 1c2:	c1 2f       	mov	r28, r17
+	PORTA &= ~((1<<PINA0)|(1<<PINA1)|(1<<PINA2));//светодиод в казане
+	_delay_ms(1000);
+    while (1) 
+    {
+		//_delay_ms(2000);	
+		if (zaslonka_labirinta == 1 && shkatulka_dobby == 1 && kirpichi_razgadany == 1){
+ 1c4:	80 91 78 00 	lds	r24, 0x0078
+ 1c8:	90 91 79 00 	lds	r25, 0x0079
+ 1cc:	01 97       	sbiw	r24, 0x01	; 1
+ 1ce:	81 f5       	brne	.+96     	; 0x230 <main+0x9a>
+ 1d0:	80 91 72 00 	lds	r24, 0x0072
+ 1d4:	90 91 73 00 	lds	r25, 0x0073
+ 1d8:	01 97       	sbiw	r24, 0x01	; 1
+ 1da:	51 f5       	brne	.+84     	; 0x230 <main+0x9a>
+ 1dc:	80 91 6e 00 	lds	r24, 0x006E
+ 1e0:	90 91 6f 00 	lds	r25, 0x006F
+ 1e4:	01 97       	sbiw	r24, 0x01	; 1
+ 1e6:	21 f5       	brne	.+72     	; 0x230 <main+0x9a>
+ 1e8:	2f ef       	ldi	r18, 0xFF	; 255
+ 1ea:	8d e3       	ldi	r24, 0x3D	; 61
+ 1ec:	99 e4       	ldi	r25, 0x49	; 73
+ 1ee:	21 50       	subi	r18, 0x01	; 1
+ 1f0:	80 40       	sbci	r24, 0x00	; 0
+ 1f2:	90 40       	sbci	r25, 0x00	; 0
+ 1f4:	e1 f7       	brne	.-8      	; 0x1ee <main+0x58>
+ 1f6:	00 c0       	rjmp	.+0      	; 0x1f8 <main+0x62>
+ 1f8:	00 00       	nop
+			_delay_ms(3000);
+			if (zaslonka_labirinta == 1 && shkatulka_dobby == 1 && kirpichi_razgadany == 1){
+ 1fa:	80 91 78 00 	lds	r24, 0x0078
+ 1fe:	90 91 79 00 	lds	r25, 0x0079
+ 202:	01 97       	sbiw	r24, 0x01	; 1
+ 204:	d9 f4       	brne	.+54     	; 0x23c <main+0xa6>
+ 206:	80 91 72 00 	lds	r24, 0x0072
+ 20a:	90 91 73 00 	lds	r25, 0x0073
+ 20e:	01 97       	sbiw	r24, 0x01	; 1
+ 210:	a9 f4       	brne	.+42     	; 0x23c <main+0xa6>
+ 212:	80 91 6e 00 	lds	r24, 0x006E
+ 216:	90 91 6f 00 	lds	r25, 0x006F
+ 21a:	01 97       	sbiw	r24, 0x01	; 1
+ 21c:	79 f4       	brne	.+30     	; 0x23c <main+0xa6>
+				//_delay_ms(5000);
+				PORTB |= (1<<PINB7);//сигнал открывающий шахматы
+ 21e:	c7 9a       	sbi	0x18, 7	; 24
+				PORTA &= ~((1<<PINA0)|(1<<PINA1)|(1<<PINA2));
+ 220:	8b b3       	in	r24, 0x1b	; 27
+ 222:	88 7f       	andi	r24, 0xF8	; 248
+ 224:	8b bb       	out	0x1b, r24	; 27
+				second_room = 1;
+ 226:	d0 93 60 00 	sts	0x0060, r29
+ 22a:	c0 93 61 00 	sts	0x0061, r28
+ 22e:	06 c0       	rjmp	.+12     	; 0x23c <main+0xa6>
+				//открыть шахматы
+			}
+		} else if ((PINA & (1<<5)) || (PIND & (1<<6)) || (PINC & (1<<4))){
+ 230:	cd 99       	sbic	0x19, 5	; 25
+ 232:	03 c0       	rjmp	.+6      	; 0x23a <main+0xa4>
+ 234:	86 99       	sbic	0x10, 6	; 16
+ 236:	01 c0       	rjmp	.+2      	; 0x23a <main+0xa4>
+ 238:	9c 99       	sbic	0x13, 4	; 19
+			PORTB &= ~(1<<PINB7);//сигнал открывающий шахматы в 0
+ 23a:	c7 98       	cbi	0x18, 7	; 24
+		}
+		
+		if (!(PIND & (1<<7))){
+ 23c:	87 99       	sbic	0x10, 7	; 16
+ 23e:	0d c0       	rjmp	.+26     	; 0x25a <main+0xc4>
+			if (dobby_free == 0){
+ 240:	80 91 86 00 	lds	r24, 0x0086
+ 244:	90 91 87 00 	lds	r25, 0x0087
+ 248:	89 2b       	or	r24, r25
+ 24a:	39 f4       	brne	.+14     	; 0x25a <main+0xc4>
+				USART_Transmit('4');
+ 24c:	84 e3       	ldi	r24, 0x34	; 52
+ 24e:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+				dobby_free = 1;
+ 252:	d0 93 86 00 	sts	0x0086, r29
+ 256:	c0 93 87 00 	sts	0x0087, r28
+			}
+		}
+		
+		if (!(PINC & (1<<0))){
+ 25a:	98 99       	sbic	0x13, 0	; 19
+ 25c:	0d c0       	rjmp	.+26     	; 0x278 <main+0xe2>
+			if (anekdot1 == 0){
+ 25e:	80 91 84 00 	lds	r24, 0x0084
+ 262:	90 91 85 00 	lds	r25, 0x0085
+ 266:	89 2b       	or	r24, r25
+ 268:	39 f4       	brne	.+14     	; 0x278 <main+0xe2>
+				USART_Transmit('5');
+ 26a:	85 e3       	ldi	r24, 0x35	; 53
+ 26c:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+				anekdot1 = 1;
+ 270:	d0 93 84 00 	sts	0x0084, r29
+ 274:	c0 93 85 00 	sts	0x0085, r28
+			}
+		}
+		
+		if (!(PINC & (1<<1))){
+ 278:	99 99       	sbic	0x13, 1	; 19
+ 27a:	0d c0       	rjmp	.+26     	; 0x296 <main+0x100>
+			if (anekdot2 == 0){
+ 27c:	80 91 82 00 	lds	r24, 0x0082
+ 280:	90 91 83 00 	lds	r25, 0x0083
+ 284:	89 2b       	or	r24, r25
+ 286:	39 f4       	brne	.+14     	; 0x296 <main+0x100>
+				USART_Transmit('6');
+ 288:	86 e3       	ldi	r24, 0x36	; 54
+ 28a:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+				anekdot2 = 1;
+ 28e:	d0 93 82 00 	sts	0x0082, r29
+ 292:	c0 93 83 00 	sts	0x0083, r28
+			}
+		}
+		
+		if (!(PINC & (1<<2))){
+ 296:	9a 99       	sbic	0x13, 2	; 19
+ 298:	0d c0       	rjmp	.+26     	; 0x2b4 <main+0x11e>
+			if (anekdot3 == 0){
+ 29a:	80 91 80 00 	lds	r24, 0x0080
+ 29e:	90 91 81 00 	lds	r25, 0x0081
+ 2a2:	89 2b       	or	r24, r25
+ 2a4:	39 f4       	brne	.+14     	; 0x2b4 <main+0x11e>
+				USART_Transmit('7');
+ 2a6:	87 e3       	ldi	r24, 0x37	; 55
+ 2a8:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+				anekdot3 = 1;
+ 2ac:	d0 93 80 00 	sts	0x0080, r29
+ 2b0:	c0 93 81 00 	sts	0x0081, r28
+			}
+		}
+		
+		if (!(PINC & (1<<3))){
+ 2b4:	9b 99       	sbic	0x13, 3	; 19
+ 2b6:	0d c0       	rjmp	.+26     	; 0x2d2 <main+0x13c>
+			if (anekdot4 == 0){
+ 2b8:	80 91 7e 00 	lds	r24, 0x007E
+ 2bc:	90 91 7f 00 	lds	r25, 0x007F
+ 2c0:	89 2b       	or	r24, r25
+ 2c2:	39 f4       	brne	.+14     	; 0x2d2 <main+0x13c>
+				USART_Transmit('8');
+ 2c4:	88 e3       	ldi	r24, 0x38	; 56
+ 2c6:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+				anekdot4 = 1;
+ 2ca:	d0 93 7e 00 	sts	0x007E, r29
+ 2ce:	c0 93 7f 00 	sts	0x007F, r28
+			}
+		}
+		
+		if (!(PINA & (1<<3))){
+ 2d2:	cb 99       	sbic	0x19, 3	; 25
+ 2d4:	18 c0       	rjmp	.+48     	; 0x306 <main+0x170>
+ 2d6:	2f ef       	ldi	r18, 0xFF	; 255
+ 2d8:	81 ee       	ldi	r24, 0xE1	; 225
+ 2da:	94 e0       	ldi	r25, 0x04	; 4
+ 2dc:	21 50       	subi	r18, 0x01	; 1
+ 2de:	80 40       	sbci	r24, 0x00	; 0
+ 2e0:	90 40       	sbci	r25, 0x00	; 0
+ 2e2:	e1 f7       	brne	.-8      	; 0x2dc <main+0x146>
+ 2e4:	00 c0       	rjmp	.+0      	; 0x2e6 <main+0x150>
+ 2e6:	00 00       	nop
+			_delay_ms(200);
+			if (!(PINA & (1<<3))){
+ 2e8:	cb 99       	sbic	0x19, 3	; 25
+ 2ea:	0d c0       	rjmp	.+26     	; 0x306 <main+0x170>
+				if (kniga == 0){
+ 2ec:	80 91 7c 00 	lds	r24, 0x007C
+ 2f0:	90 91 7d 00 	lds	r25, 0x007D
+ 2f4:	89 2b       	or	r24, r25
+ 2f6:	39 f4       	brne	.+14     	; 0x306 <main+0x170>
+					USART_Transmit('3');
+ 2f8:	83 e3       	ldi	r24, 0x33	; 51
+ 2fa:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+					kniga = 1;
+ 2fe:	d0 93 7c 00 	sts	0x007C, r29
+ 302:	c0 93 7d 00 	sts	0x007D, r28
+				}
+			}
+		}
+		
+		if (!(PINA & (1<<4))){
+ 306:	cc 99       	sbic	0x19, 4	; 25
+ 308:	18 c0       	rjmp	.+48     	; 0x33a <main+0x1a4>
+ 30a:	2f ef       	ldi	r18, 0xFF	; 255
+ 30c:	81 ee       	ldi	r24, 0xE1	; 225
+ 30e:	94 e0       	ldi	r25, 0x04	; 4
+ 310:	21 50       	subi	r18, 0x01	; 1
+ 312:	80 40       	sbci	r24, 0x00	; 0
+ 314:	90 40       	sbci	r25, 0x00	; 0
+ 316:	e1 f7       	brne	.-8      	; 0x310 <main+0x17a>
+ 318:	00 c0       	rjmp	.+0      	; 0x31a <main+0x184>
+ 31a:	00 00       	nop
+			_delay_ms(200);
+			if (!(PINA & (1<<4))){
+ 31c:	cc 99       	sbic	0x19, 4	; 25
+ 31e:	0d c0       	rjmp	.+26     	; 0x33a <main+0x1a4>
+				if (shkaf == 0){
+ 320:	80 91 7a 00 	lds	r24, 0x007A
+ 324:	90 91 7b 00 	lds	r25, 0x007B
+ 328:	89 2b       	or	r24, r25
+ 32a:	39 f4       	brne	.+14     	; 0x33a <main+0x1a4>
+					USART_Transmit('d');
+ 32c:	84 e6       	ldi	r24, 0x64	; 100
+ 32e:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+					shkaf = 1;
+ 332:	d0 93 7a 00 	sts	0x007A, r29
+ 336:	c0 93 7b 00 	sts	0x007B, r28
+				}
+			}
+		}
+		
+		if (!(PINA & (1<<5))){
+ 33a:	cd 99       	sbic	0x19, 5	; 25
+ 33c:	18 c0       	rjmp	.+48     	; 0x36e <main+0x1d8>
+ 33e:	2f e7       	ldi	r18, 0x7F	; 127
+ 340:	8c ef       	ldi	r24, 0xFC	; 252
+ 342:	9a e0       	ldi	r25, 0x0A	; 10
+ 344:	21 50       	subi	r18, 0x01	; 1
+ 346:	80 40       	sbci	r24, 0x00	; 0
+ 348:	90 40       	sbci	r25, 0x00	; 0
+ 34a:	e1 f7       	brne	.-8      	; 0x344 <main+0x1ae>
+ 34c:	00 c0       	rjmp	.+0      	; 0x34e <main+0x1b8>
+ 34e:	00 00       	nop
+			_delay_ms(450);
+			if (!(PINA & (1<<5))){
+ 350:	cd 99       	sbic	0x19, 5	; 25
+ 352:	0d c0       	rjmp	.+26     	; 0x36e <main+0x1d8>
+				if (zaslonka_labirinta == 0){
+ 354:	80 91 78 00 	lds	r24, 0x0078
+ 358:	90 91 79 00 	lds	r25, 0x0079
+ 35c:	89 2b       	or	r24, r25
+ 35e:	39 f4       	brne	.+14     	; 0x36e <main+0x1d8>
+					USART_Transmit('2');
+ 360:	82 e3       	ldi	r24, 0x32	; 50
+ 362:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+					zaslonka_labirinta = 1;
+ 366:	d0 93 78 00 	sts	0x0078, r29
+ 36a:	c0 93 79 00 	sts	0x0079, r28
+				}
+			}
+		}
+		
+		if (!(PINA & (1<<6))){
+ 36e:	ce 99       	sbic	0x19, 6	; 25
+ 370:	18 c0       	rjmp	.+48     	; 0x3a2 <main+0x20c>
+ 372:	2f ef       	ldi	r18, 0xFF	; 255
+ 374:	81 ee       	ldi	r24, 0xE1	; 225
+ 376:	94 e0       	ldi	r25, 0x04	; 4
+ 378:	21 50       	subi	r18, 0x01	; 1
+ 37a:	80 40       	sbci	r24, 0x00	; 0
+ 37c:	90 40       	sbci	r25, 0x00	; 0
+ 37e:	e1 f7       	brne	.-8      	; 0x378 <main+0x1e2>
+ 380:	00 c0       	rjmp	.+0      	; 0x382 <main+0x1ec>
+ 382:	00 00       	nop
+			_delay_ms(200);
+			if (!(PINA & (1<<6))){
+ 384:	ce 99       	sbic	0x19, 6	; 25
+ 386:	0d c0       	rjmp	.+26     	; 0x3a2 <main+0x20c>
+				if (sunduk == 0){
+ 388:	80 91 76 00 	lds	r24, 0x0076
+ 38c:	90 91 77 00 	lds	r25, 0x0077
+ 390:	89 2b       	or	r24, r25
+ 392:	39 f4       	brne	.+14     	; 0x3a2 <main+0x20c>
+					USART_Transmit('1');
+ 394:	81 e3       	ldi	r24, 0x31	; 49
+ 396:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+					sunduk = 1;
+ 39a:	d0 93 76 00 	sts	0x0076, r29
+ 39e:	c0 93 77 00 	sts	0x0077, r28
+				}
+			}
+		}
+		
+		if (!(PINA & (1<<7))){
+ 3a2:	cf 99       	sbic	0x19, 7	; 25
+ 3a4:	23 c0       	rjmp	.+70     	; 0x3ec <main+0x256>
+ 3a6:	2f ef       	ldi	r18, 0xFF	; 255
+ 3a8:	81 ee       	ldi	r24, 0xE1	; 225
+ 3aa:	94 e0       	ldi	r25, 0x04	; 4
+ 3ac:	21 50       	subi	r18, 0x01	; 1
+ 3ae:	80 40       	sbci	r24, 0x00	; 0
+ 3b0:	90 40       	sbci	r25, 0x00	; 0
+ 3b2:	e1 f7       	brne	.-8      	; 0x3ac <main+0x216>
+ 3b4:	00 c0       	rjmp	.+0      	; 0x3b6 <main+0x220>
+ 3b6:	00 00       	nop
+			_delay_ms(200);
+			if (!(PINA & (1<<7))){
+ 3b8:	cf 99       	sbic	0x19, 7	; 25
+ 3ba:	18 c0       	rjmp	.+48     	; 0x3ec <main+0x256>
+				if (banochka_zeliya == 0){
+ 3bc:	80 91 74 00 	lds	r24, 0x0074
+ 3c0:	90 91 75 00 	lds	r25, 0x0075
+ 3c4:	89 2b       	or	r24, r25
+ 3c6:	91 f4       	brne	.+36     	; 0x3ec <main+0x256>
+					USART_Transmit('p');
+ 3c8:	80 e7       	ldi	r24, 0x70	; 112
+ 3ca:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+					banochka_zeliya = 1;
+ 3ce:	d0 93 74 00 	sts	0x0074, r29
+ 3d2:	c0 93 75 00 	sts	0x0075, r28
+					PORTC |= (1<<PINC7);//открыть шкатулку с подсказкой к двери
+ 3d6:	af 9a       	sbi	0x15, 7	; 21
+ 3d8:	2f e7       	ldi	r18, 0x7F	; 127
+ 3da:	8d e9       	ldi	r24, 0x9D	; 157
+ 3dc:	95 e0       	ldi	r25, 0x05	; 5
+ 3de:	21 50       	subi	r18, 0x01	; 1
+ 3e0:	80 40       	sbci	r24, 0x00	; 0
+ 3e2:	90 40       	sbci	r25, 0x00	; 0
+ 3e4:	e1 f7       	brne	.-8      	; 0x3de <main+0x248>
+ 3e6:	00 c0       	rjmp	.+0      	; 0x3e8 <main+0x252>
+ 3e8:	00 00       	nop
+					_delay_ms(230);
+					PORTC &= ~(1<<PINC7);
+ 3ea:	af 98       	cbi	0x15, 7	; 21
+				}
+			}
+		}
+		
+		if (!(PIND & (1<<6))){
+ 3ec:	86 99       	sbic	0x10, 6	; 16
+ 3ee:	18 c0       	rjmp	.+48     	; 0x420 <__FUSE_REGION_LENGTH__+0x20>
+ 3f0:	2f ef       	ldi	r18, 0xFF	; 255
+ 3f2:	82 e5       	ldi	r24, 0x52	; 82
+ 3f4:	97 e0       	ldi	r25, 0x07	; 7
+ 3f6:	21 50       	subi	r18, 0x01	; 1
+ 3f8:	80 40       	sbci	r24, 0x00	; 0
+ 3fa:	90 40       	sbci	r25, 0x00	; 0
+ 3fc:	e1 f7       	brne	.-8      	; 0x3f6 <main+0x260>
+ 3fe:	00 c0       	rjmp	.+0      	; 0x400 <__FUSE_REGION_LENGTH__>
+ 400:	00 00       	nop
+			_delay_ms(300);
+			if (!(PIND & (1<<6))){
+ 402:	86 99       	sbic	0x10, 6	; 16
+ 404:	0d c0       	rjmp	.+26     	; 0x420 <__FUSE_REGION_LENGTH__+0x20>
+				if (shkatulka_dobby == 0){
+ 406:	80 91 72 00 	lds	r24, 0x0072
+ 40a:	90 91 73 00 	lds	r25, 0x0073
+ 40e:	89 2b       	or	r24, r25
+ 410:	39 f4       	brne	.+14     	; 0x420 <__FUSE_REGION_LENGTH__+0x20>
+					USART_Transmit('9');
+ 412:	89 e3       	ldi	r24, 0x39	; 57
+ 414:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+					shkatulka_dobby = 1;
+ 418:	d0 93 72 00 	sts	0x0072, r29
+ 41c:	c0 93 73 00 	sts	0x0073, r28
+				}
+			}
+		}
+		
+		if (!(PINC & (1<<5))){
+ 420:	9d 99       	sbic	0x13, 5	; 19
+ 422:	0d c0       	rjmp	.+26     	; 0x43e <__FUSE_REGION_LENGTH__+0x3e>
+			if (nagatie_kirpicha == 0){
+ 424:	80 91 70 00 	lds	r24, 0x0070
+ 428:	90 91 71 00 	lds	r25, 0x0071
+ 42c:	89 2b       	or	r24, r25
+ 42e:	39 f4       	brne	.+14     	; 0x43e <__FUSE_REGION_LENGTH__+0x3e>
+				USART_Transmit('a');
+ 430:	81 e6       	ldi	r24, 0x61	; 97
+ 432:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+				nagatie_kirpicha = 1;
+ 436:	d0 93 70 00 	sts	0x0070, r29
+ 43a:	c0 93 71 00 	sts	0x0071, r28
+			}
+		}
+		
+		if (!(PINC & (1<<4))){
+ 43e:	9c 99       	sbic	0x13, 4	; 19
+ 440:	0d c0       	rjmp	.+26     	; 0x45c <__FUSE_REGION_LENGTH__+0x5c>
+			if (kirpichi_razgadany == 0){
+ 442:	80 91 6e 00 	lds	r24, 0x006E
+ 446:	90 91 6f 00 	lds	r25, 0x006F
+ 44a:	89 2b       	or	r24, r25
+ 44c:	39 f4       	brne	.+14     	; 0x45c <__FUSE_REGION_LENGTH__+0x5c>
+				USART_Transmit('b');
+ 44e:	82 e6       	ldi	r24, 0x62	; 98
+ 450:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+				kirpichi_razgadany = 1;
+ 454:	d0 93 6e 00 	sts	0x006E, r29
+ 458:	c0 93 6f 00 	sts	0x006F, r28
+			}
+		}
+		
+		if (second_room == 1){
+ 45c:	80 91 60 00 	lds	r24, 0x0060
+ 460:	90 91 61 00 	lds	r25, 0x0061
+ 464:	01 97       	sbiw	r24, 0x01	; 1
+ 466:	09 f0       	breq	.+2      	; 0x46a <__stack+0xb>
+ 468:	ad ce       	rjmp	.-678    	; 0x1c4 <main+0x2e>
+			//2nd room
+			if (!(PINB & (1<<3))){
+ 46a:	b3 99       	sbic	0x16, 3	; 22
+ 46c:	0d c0       	rjmp	.+26     	; 0x488 <__stack+0x29>
+				if (boi_sila_griffindora == 0){
+ 46e:	80 91 6c 00 	lds	r24, 0x006C
+ 472:	90 91 6d 00 	lds	r25, 0x006D
+ 476:	89 2b       	or	r24, r25
+ 478:	39 f4       	brne	.+14     	; 0x488 <__stack+0x29>
+					USART_Transmit('n');
+ 47a:	8e e6       	ldi	r24, 0x6E	; 110
+ 47c:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+					boi_sila_griffindora = 1;
+ 480:	d0 93 6c 00 	sts	0x006C, r29
+ 484:	c0 93 6d 00 	sts	0x006D, r28
+				}
+			}
+			
+			if (!(PIND & (1<<2))){
+ 488:	82 99       	sbic	0x10, 2	; 16
+ 48a:	0d c0       	rjmp	.+26     	; 0x4a6 <__stack+0x47>
+				if (boi_sila_slizerina == 0){
+ 48c:	80 91 68 00 	lds	r24, 0x0068
+ 490:	90 91 69 00 	lds	r25, 0x0069
+ 494:	89 2b       	or	r24, r25
+ 496:	39 f4       	brne	.+14     	; 0x4a6 <__stack+0x47>
+					USART_Transmit('l');;
+ 498:	8c e6       	ldi	r24, 0x6C	; 108
+ 49a:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+					boi_sila_slizerina = 1;
+ 49e:	d0 93 68 00 	sts	0x0068, r29
+ 4a2:	c0 93 69 00 	sts	0x0069, r28
+				}
+			}
+			
+			if (!(PIND & (1<<3))){
+ 4a6:	83 99       	sbic	0x10, 3	; 16
+ 4a8:	0d c0       	rjmp	.+26     	; 0x4c4 <__stack+0x65>
+				if (boi_sila_kogtevran == 0){
+ 4aa:	80 91 6a 00 	lds	r24, 0x006A
+ 4ae:	90 91 6b 00 	lds	r25, 0x006B
+ 4b2:	89 2b       	or	r24, r25
+ 4b4:	39 f4       	brne	.+14     	; 0x4c4 <__stack+0x65>
+					USART_Transmit('m');
+ 4b6:	8d e6       	ldi	r24, 0x6D	; 109
+ 4b8:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+					boi_sila_kogtevran = 1;
+ 4bc:	d0 93 6a 00 	sts	0x006A, r29
+ 4c0:	c0 93 6b 00 	sts	0x006B, r28
+				}
+			}
+			
+			if (!(PINB & (1<<2))){//начало/возобновление боя
+ 4c4:	b2 99       	sbic	0x16, 2	; 22
+ 4c6:	1c c0       	rjmp	.+56     	; 0x500 <__stack+0xa1>
+ 4c8:	2f e7       	ldi	r18, 0x7F	; 127
+ 4ca:	8b e8       	ldi	r24, 0x8B	; 139
+ 4cc:	98 e0       	ldi	r25, 0x08	; 8
+ 4ce:	21 50       	subi	r18, 0x01	; 1
+ 4d0:	80 40       	sbci	r24, 0x00	; 0
+ 4d2:	90 40       	sbci	r25, 0x00	; 0
+ 4d4:	e1 f7       	brne	.-8      	; 0x4ce <__stack+0x6f>
+ 4d6:	00 c0       	rjmp	.+0      	; 0x4d8 <__stack+0x79>
+ 4d8:	00 00       	nop
+				_delay_ms(350);
+				if (!(PINB & (1<<2))){//начало/возобновление боя
+ 4da:	b2 99       	sbic	0x16, 2	; 22
+ 4dc:	11 c0       	rjmp	.+34     	; 0x500 <__stack+0xa1>
+					if (nachalo_boya == 0){
+ 4de:	80 91 66 00 	lds	r24, 0x0066
+ 4e2:	90 91 67 00 	lds	r25, 0x0067
+ 4e6:	89 2b       	or	r24, r25
+ 4e8:	59 f4       	brne	.+22     	; 0x500 <__stack+0xa1>
+						USART_Transmit('e');
+ 4ea:	85 e6       	ldi	r24, 0x65	; 101
+ 4ec:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+						nachalo_boya = 1;
+ 4f0:	d0 93 66 00 	sts	0x0066, r29
+ 4f4:	c0 93 67 00 	sts	0x0067, r28
+						boy_prervan = 0;
+ 4f8:	10 92 65 00 	sts	0x0065, r1
+ 4fc:	10 92 64 00 	sts	0x0064, r1
+					}
+				}
+			}
+			
+			if (!(PINB & (1<<1))){//прерывание боя
+ 500:	b1 99       	sbic	0x16, 1	; 22
+ 502:	60 ce       	rjmp	.-832    	; 0x1c4 <main+0x2e>
+ 504:	2f ef       	ldi	r18, 0xFF	; 255
+ 506:	86 e1       	ldi	r24, 0x16	; 22
+ 508:	91 e1       	ldi	r25, 0x11	; 17
+ 50a:	21 50       	subi	r18, 0x01	; 1
+ 50c:	80 40       	sbci	r24, 0x00	; 0
+ 50e:	90 40       	sbci	r25, 0x00	; 0
+ 510:	e1 f7       	brne	.-8      	; 0x50a <__stack+0xab>
+ 512:	00 c0       	rjmp	.+0      	; 0x514 <__stack+0xb5>
+ 514:	00 00       	nop
+				_delay_ms(700);
+				if (!(PINB & (1<<1))){//прерывание боя
+ 516:	b1 99       	sbic	0x16, 1	; 22
+ 518:	55 ce       	rjmp	.-854    	; 0x1c4 <main+0x2e>
+					if (boy_prervan == 0){
+ 51a:	80 91 64 00 	lds	r24, 0x0064
+ 51e:	90 91 65 00 	lds	r25, 0x0065
+ 522:	89 2b       	or	r24, r25
+ 524:	09 f0       	breq	.+2      	; 0x528 <__stack+0xc9>
+ 526:	4e ce       	rjmp	.-868    	; 0x1c4 <main+0x2e>
+						USART_Transmit('g');
+ 528:	87 e6       	ldi	r24, 0x67	; 103
+ 52a:	0e 94 a9 02 	call	0x552	; 0x552 <USART_Transmit>
+						boy_prervan = 1;
+ 52e:	00 93 64 00 	sts	0x0064, r16
+ 532:	10 93 65 00 	sts	0x0065, r17
+						nachalo_boya = 0;
+ 536:	10 92 67 00 	sts	0x0067, r1
+ 53a:	10 92 66 00 	sts	0x0066, r1
+ 53e:	42 ce       	rjmp	.-892    	; 0x1c4 <main+0x2e>
+
+00000540 <USART_Init>:
+#include "usart.h"
+
+void USART_Init( unsigned int ubrr)//Инициализация модуля USART
+{
+	//Зададим скорость работы USART 115200
+	UBRRH = (unsigned char)(ubrr>>8);
+ 540:	90 bd       	out	0x20, r25	; 32
+	UBRRL = (unsigned char)ubrr;
+ 542:	89 b9       	out	0x09, r24	; 9
+	
+	UCSRB=(1<<RXEN)|( 1<<TXEN); //Включаем прием и передачу по USART
+ 544:	88 e1       	ldi	r24, 0x18	; 24
+ 546:	8a b9       	out	0x0a, r24	; 10
+	UCSRB |= (1<<RXCIE); //Разрешаем прерывание при передаче
+ 548:	57 9a       	sbi	0x0a, 7	; 10
+	UCSRA |= (1<<U2X); // Для 8 мгц
+ 54a:	59 9a       	sbi	0x0b, 1	; 11
+	UCSRC = (1<<URSEL)|(1<<USBS)|(1<<UCSZ1)|(1<<UCSZ0);// Обращаемся именно к регистру UCSRC (URSEL=1),
+ 54c:	8e e8       	ldi	r24, 0x8E	; 142
+ 54e:	80 bd       	out	0x20, r24	; 32
+ 550:	08 95       	ret
+
+00000552 <USART_Transmit>:
+	//1 стоп-бит (USBS=0), 8-бит посылка (UCSZ1=1 и UCSZ0=1)
+}
+
+void USART_Transmit( unsigned char data ) //Функция отправки данных
+{
+	while ( !(UCSRA & (1<<UDRE)) ); //Ожидание опустошения буфера приема
+ 552:	5d 9b       	sbis	0x0b, 5	; 11
+ 554:	fe cf       	rjmp	.-4      	; 0x552 <USART_Transmit>
+	UDR = data; //Начало передачи данных
+ 556:	8c b9       	out	0x0c, r24	; 12
+ 558:	08 95       	ret
+
+0000055a <_exit>:
+ 55a:	f8 94       	cli
+
+0000055c <__stop_program>:
+ 55c:	ff cf       	rjmp	.-2      	; 0x55c <__stop_program>

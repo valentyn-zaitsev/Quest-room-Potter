@@ -1,0 +1,759 @@
+
+Chess_v.2.1.0.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000344  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000003b8  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          0000000a  00800060  00800060  000003b8  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000003b8  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000003e8  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000068  00000000  00000000  00000424  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000647  00000000  00000000  0000048c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000198  00000000  00000000  00000ad3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000055a  00000000  00000000  00000c6b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000000c8  00000000  00000000  000011c8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000216  00000000  00000000  00001290  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000004a3  00000000  00000000  000014a6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000090  00000000  00000000  00001949  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_clear_bss>:
+  32:	20 e0       	ldi	r18, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	aa 36       	cpi	r26, 0x6A	; 106
+  3e:	b2 07       	cpc	r27, r18
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	9e d0       	rcall	.+316    	; 0x180 <main>
+  44:	7d c1       	rjmp	.+762    	; 0x340 <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <preset>:
+int officer_switcher = 0;
+int door_open = 0;
+int horse_switcher = 0;
+
+void preset(void) {
+	DDRB = 0b10111100;
+  48:	8c eb       	ldi	r24, 0xBC	; 188
+  4a:	87 bb       	out	0x17, r24	; 23
+	DDRC = 0b00111100;
+  4c:	8c e3       	ldi	r24, 0x3C	; 60
+  4e:	84 bb       	out	0x14, r24	; 20
+	DDRD = 0b01100001;
+  50:	81 e6       	ldi	r24, 0x61	; 97
+  52:	81 bb       	out	0x11, r24	; 17
+	PORTB = 0x00;
+  54:	18 ba       	out	0x18, r1	; 24
+	PORTC = 0x00;
+  56:	15 ba       	out	0x15, r1	; 21
+	PORTD = 0x00;	
+  58:	12 ba       	out	0x12, r1	; 18
+  5a:	08 95       	ret
+
+0000005c <delay>:
+}
+
+void delay(int t) {
+	for (int i=0; i<t; i++) {
+  5c:	18 16       	cp	r1, r24
+  5e:	19 06       	cpc	r1, r25
+  60:	44 f4       	brge	.+16     	; 0x72 <delay+0x16>
+  62:	20 e0       	ldi	r18, 0x00	; 0
+  64:	30 e0       	ldi	r19, 0x00	; 0
+		nop();
+  66:	00 00       	nop
+	PORTC = 0x00;
+	PORTD = 0x00;	
+}
+
+void delay(int t) {
+	for (int i=0; i<t; i++) {
+  68:	2f 5f       	subi	r18, 0xFF	; 255
+  6a:	3f 4f       	sbci	r19, 0xFF	; 255
+  6c:	28 17       	cp	r18, r24
+  6e:	39 07       	cpc	r19, r25
+  70:	d1 f7       	brne	.-12     	; 0x66 <delay+0xa>
+  72:	08 95       	ret
+
+00000074 <longDelay>:
+		nop();
+	}
+}
+
+void longDelay(int t) {
+  74:	0f 93       	push	r16
+  76:	1f 93       	push	r17
+  78:	cf 93       	push	r28
+  7a:	df 93       	push	r29
+	for (int i=0; i<t; i++) {
+  7c:	18 16       	cp	r1, r24
+  7e:	19 06       	cpc	r1, r25
+  80:	54 f4       	brge	.+20     	; 0x96 <longDelay+0x22>
+  82:	8c 01       	movw	r16, r24
+  84:	c0 e0       	ldi	r28, 0x00	; 0
+  86:	d0 e0       	ldi	r29, 0x00	; 0
+		delay(600);//было 300
+  88:	88 e5       	ldi	r24, 0x58	; 88
+  8a:	92 e0       	ldi	r25, 0x02	; 2
+  8c:	e7 df       	rcall	.-50     	; 0x5c <delay>
+		nop();
+	}
+}
+
+void longDelay(int t) {
+	for (int i=0; i<t; i++) {
+  8e:	21 96       	adiw	r28, 0x01	; 1
+  90:	c0 17       	cp	r28, r16
+  92:	d1 07       	cpc	r29, r17
+  94:	c9 f7       	brne	.-14     	; 0x88 <longDelay+0x14>
+		delay(600);//было 300
+	}
+}
+  96:	df 91       	pop	r29
+  98:	cf 91       	pop	r28
+  9a:	1f 91       	pop	r17
+  9c:	0f 91       	pop	r16
+  9e:	08 95       	ret
+
+000000a0 <kingDelay>:
+
+void kingDelay(void) {
+	longDelay(5);
+  a0:	85 e0       	ldi	r24, 0x05	; 5
+  a2:	90 e0       	ldi	r25, 0x00	; 0
+  a4:	e7 df       	rcall	.-50     	; 0x74 <longDelay>
+  a6:	08 95       	ret
+
+000000a8 <officerDelay>:
+}
+
+void officerDelay(void) {
+	longDelay(3);
+  a8:	83 e0       	ldi	r24, 0x03	; 3
+  aa:	90 e0       	ldi	r25, 0x00	; 0
+  ac:	e3 df       	rcall	.-58     	; 0x74 <longDelay>
+  ae:	08 95       	ret
+
+000000b0 <king_forward>:
+}
+
+void king_forward(void) {
+	PORTB = 0b00000100;
+  b0:	84 e0       	ldi	r24, 0x04	; 4
+  b2:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  b4:	f5 df       	rcall	.-22     	; 0xa0 <kingDelay>
+	PORTB = 0b00001100;
+  b6:	8c e0       	ldi	r24, 0x0C	; 12
+  b8:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  ba:	f2 df       	rcall	.-28     	; 0xa0 <kingDelay>
+	PORTB = 0b00001000;
+  bc:	88 e0       	ldi	r24, 0x08	; 8
+  be:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  c0:	ef df       	rcall	.-34     	; 0xa0 <kingDelay>
+	PORTB = 0b00011000;
+  c2:	88 e1       	ldi	r24, 0x18	; 24
+  c4:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  c6:	ec df       	rcall	.-40     	; 0xa0 <kingDelay>
+	PORTB = 0b00010000;
+  c8:	80 e1       	ldi	r24, 0x10	; 16
+  ca:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  cc:	e9 df       	rcall	.-46     	; 0xa0 <kingDelay>
+	PORTB = 0b00110000;
+  ce:	80 e3       	ldi	r24, 0x30	; 48
+  d0:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  d2:	e6 df       	rcall	.-52     	; 0xa0 <kingDelay>
+	PORTB = 0b00100000;
+  d4:	80 e2       	ldi	r24, 0x20	; 32
+  d6:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  d8:	e3 df       	rcall	.-58     	; 0xa0 <kingDelay>
+	PORTB = 0b00100100;
+  da:	84 e2       	ldi	r24, 0x24	; 36
+  dc:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  de:	e0 df       	rcall	.-64     	; 0xa0 <kingDelay>
+	PORTB = 0x00;
+  e0:	18 ba       	out	0x18, r1	; 24
+  e2:	08 95       	ret
+
+000000e4 <king_back>:
+}
+
+void king_back(void) {
+	PORTB = 0b00100000;
+  e4:	80 e2       	ldi	r24, 0x20	; 32
+  e6:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  e8:	db df       	rcall	.-74     	; 0xa0 <kingDelay>
+	PORTB = 0b00110000;
+  ea:	80 e3       	ldi	r24, 0x30	; 48
+  ec:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  ee:	d8 df       	rcall	.-80     	; 0xa0 <kingDelay>
+	PORTB = 0b00010000;
+  f0:	80 e1       	ldi	r24, 0x10	; 16
+  f2:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  f4:	d5 df       	rcall	.-86     	; 0xa0 <kingDelay>
+	PORTB = 0b00011000;
+  f6:	88 e1       	ldi	r24, 0x18	; 24
+  f8:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+  fa:	d2 df       	rcall	.-92     	; 0xa0 <kingDelay>
+	PORTB = 0b00001000;
+  fc:	88 e0       	ldi	r24, 0x08	; 8
+  fe:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+ 100:	cf df       	rcall	.-98     	; 0xa0 <kingDelay>
+	PORTB = 0b00001100;
+ 102:	8c e0       	ldi	r24, 0x0C	; 12
+ 104:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+ 106:	cc df       	rcall	.-104    	; 0xa0 <kingDelay>
+	PORTB = 0b00000100;
+ 108:	84 e0       	ldi	r24, 0x04	; 4
+ 10a:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+ 10c:	c9 df       	rcall	.-110    	; 0xa0 <kingDelay>
+	PORTB = 0b00100100;
+ 10e:	84 e2       	ldi	r24, 0x24	; 36
+ 110:	88 bb       	out	0x18, r24	; 24
+	kingDelay();
+ 112:	c6 df       	rcall	.-116    	; 0xa0 <kingDelay>
+	PORTB = 0x00;
+ 114:	18 ba       	out	0x18, r1	; 24
+ 116:	08 95       	ret
+
+00000118 <officer_back>:
+}
+
+void officer_back(void) {
+	PORTC = 0b00000100;
+ 118:	84 e0       	ldi	r24, 0x04	; 4
+ 11a:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 11c:	c5 df       	rcall	.-118    	; 0xa8 <officerDelay>
+	PORTC = 0b00001100;
+ 11e:	8c e0       	ldi	r24, 0x0C	; 12
+ 120:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 122:	c2 df       	rcall	.-124    	; 0xa8 <officerDelay>
+	PORTC = 0b00001000;
+ 124:	88 e0       	ldi	r24, 0x08	; 8
+ 126:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 128:	bf df       	rcall	.-130    	; 0xa8 <officerDelay>
+	PORTC = 0b00011000;
+ 12a:	88 e1       	ldi	r24, 0x18	; 24
+ 12c:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 12e:	bc df       	rcall	.-136    	; 0xa8 <officerDelay>
+	PORTC = 0b00010000;
+ 130:	80 e1       	ldi	r24, 0x10	; 16
+ 132:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 134:	b9 df       	rcall	.-142    	; 0xa8 <officerDelay>
+	PORTC = 0b00110000;
+ 136:	80 e3       	ldi	r24, 0x30	; 48
+ 138:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 13a:	b6 df       	rcall	.-148    	; 0xa8 <officerDelay>
+	PORTC = 0b00100000;
+ 13c:	80 e2       	ldi	r24, 0x20	; 32
+ 13e:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 140:	b3 df       	rcall	.-154    	; 0xa8 <officerDelay>
+	PORTC = 0b00100100;
+ 142:	84 e2       	ldi	r24, 0x24	; 36
+ 144:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 146:	b0 df       	rcall	.-160    	; 0xa8 <officerDelay>
+	PORTC = 0x00;
+ 148:	15 ba       	out	0x15, r1	; 21
+ 14a:	08 95       	ret
+
+0000014c <officer_forward>:
+}
+
+void officer_forward(void) {
+	PORTC = 0b00100000;
+ 14c:	80 e2       	ldi	r24, 0x20	; 32
+ 14e:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 150:	ab df       	rcall	.-170    	; 0xa8 <officerDelay>
+	PORTC = 0b00110000;
+ 152:	80 e3       	ldi	r24, 0x30	; 48
+ 154:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 156:	a8 df       	rcall	.-176    	; 0xa8 <officerDelay>
+	PORTC = 0b00010000;
+ 158:	80 e1       	ldi	r24, 0x10	; 16
+ 15a:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 15c:	a5 df       	rcall	.-182    	; 0xa8 <officerDelay>
+	PORTC = 0b00011000;
+ 15e:	88 e1       	ldi	r24, 0x18	; 24
+ 160:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 162:	a2 df       	rcall	.-188    	; 0xa8 <officerDelay>
+	PORTC = 0b00001000;
+ 164:	88 e0       	ldi	r24, 0x08	; 8
+ 166:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 168:	9f df       	rcall	.-194    	; 0xa8 <officerDelay>
+	PORTC = 0b00001100;
+ 16a:	8c e0       	ldi	r24, 0x0C	; 12
+ 16c:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 16e:	9c df       	rcall	.-200    	; 0xa8 <officerDelay>
+	PORTC = 0b00000100;
+ 170:	84 e0       	ldi	r24, 0x04	; 4
+ 172:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 174:	99 df       	rcall	.-206    	; 0xa8 <officerDelay>
+	PORTC = 0b00100100;
+ 176:	84 e2       	ldi	r24, 0x24	; 36
+ 178:	85 bb       	out	0x15, r24	; 21
+	officerDelay();
+ 17a:	96 df       	rcall	.-212    	; 0xa8 <officerDelay>
+	PORTC = 0x00;
+ 17c:	15 ba       	out	0x15, r1	; 21
+ 17e:	08 95       	ret
+
+00000180 <main>:
+}
+
+int main (void)
+{
+	preset();
+ 180:	63 df       	rcall	.-314    	; 0x48 <preset>
+	PORTD |= (1 << PIND5)|(1<<PIND6);//электромагниты шкафа и шахмат закрыты
+ 182:	82 b3       	in	r24, 0x12	; 18
+ 184:	80 66       	ori	r24, 0x60	; 96
+ 186:	82 bb       	out	0x12, r24	; 18
+								_delay_ms(150);
+								if (!(PIND & (1<<PIND1))){
+									PORTD &= ~(1 << PIND0);
+									PORTB |= (1 << PINB7);//звук падшего короля
+									_delay_ms(1800);
+									door_open = 1;
+ 188:	01 e0       	ldi	r16, 0x01	; 1
+ 18a:	10 e0       	ldi	r17, 0x00	; 0
+								PORTD |= (1 << PIND0);//звук коня
+								//_delay_ms(5000);
+								//PORTD &= ~(1 << PIND0);//выключить звук коня
+								horse_switcher = 1;
+							}
+							if (king_switcher == 0){								
+ 18c:	0f 2e       	mov	r0, r31
+ 18e:	f4 ef       	ldi	r31, 0xF4	; 244
+ 190:	af 2e       	mov	r10, r31
+ 192:	f0 2d       	mov	r31, r0
+ 194:	bb 24       	eor	r11, r11
+ 196:	b3 94       	inc	r11
+ 198:	0f 2e       	mov	r0, r31
+ 19a:	f8 e8       	ldi	r31, 0x88	; 136
+ 19c:	cf 2e       	mov	r12, r31
+ 19e:	f0 2d       	mov	r31, r0
+ 1a0:	0f 2e       	mov	r0, r31
+ 1a2:	f3 e1       	ldi	r31, 0x13	; 19
+ 1a4:	df 2e       	mov	r13, r31
+ 1a6:	f0 2d       	mov	r31, r0
+			if (!(PIND & (1<<PIND4))) {
+				for (int i=0; i<5000; i++) {
+					if (!(PINB & (1<<PINB0))){//концевик офицера назад
+						break;
+					}
+					officer_back();
+ 1a8:	0f 2e       	mov	r0, r31
+ 1aa:	f7 e8       	ldi	r31, 0x87	; 135
+ 1ac:	ef 2e       	mov	r14, r31
+ 1ae:	f0 2d       	mov	r31, r0
+ 1b0:	0f 2e       	mov	r0, r31
+ 1b2:	f3 e1       	ldi	r31, 0x13	; 19
+ 1b4:	ff 2e       	mov	r15, r31
+ 1b6:	f0 2d       	mov	r31, r0
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1b8:	2f e9       	ldi	r18, 0x9F	; 159
+ 1ba:	86 e8       	ldi	r24, 0x86	; 134
+ 1bc:	91 e0       	ldi	r25, 0x01	; 1
+ 1be:	21 50       	subi	r18, 0x01	; 1
+ 1c0:	80 40       	sbci	r24, 0x00	; 0
+ 1c2:	90 40       	sbci	r25, 0x00	; 0
+ 1c4:	e1 f7       	brne	.-8      	; 0x1be <main+0x3e>
+ 1c6:	00 c0       	rjmp	.+0      	; 0x1c8 <main+0x48>
+ 1c8:	00 00       	nop
+	PORTD |= (1 << PIND5)|(1<<PIND6);//электромагниты шкафа и шахмат закрыты
+	while(1) {
+		//officer_back();
+		//king_forward();
+		_delay_ms(500);
+		if (door_open == 1){
+ 1ca:	80 91 62 00 	lds	r24, 0x0062
+ 1ce:	90 91 63 00 	lds	r25, 0x0063
+ 1d2:	01 97       	sbiw	r24, 0x01	; 1
+ 1d4:	09 f4       	brne	.+2      	; 0x1d8 <main+0x58>
+			PORTD &= ~(1<<PIND5);
+ 1d6:	95 98       	cbi	0x12, 5	; 18
+		}
+		if (!(PINB & (1<<6))) {//пазлы (сигнал от шаров)
+ 1d8:	b6 99       	sbic	0x16, 6	; 22
+ 1da:	12 c0       	rjmp	.+36     	; 0x200 <main+0x80>
+ 1dc:	2f eb       	ldi	r18, 0xBF	; 191
+ 1de:	87 e2       	ldi	r24, 0x27	; 39
+ 1e0:	99 e0       	ldi	r25, 0x09	; 9
+ 1e2:	21 50       	subi	r18, 0x01	; 1
+ 1e4:	80 40       	sbci	r24, 0x00	; 0
+ 1e6:	90 40       	sbci	r25, 0x00	; 0
+ 1e8:	e1 f7       	brne	.-8      	; 0x1e2 <main+0x62>
+ 1ea:	00 c0       	rjmp	.+0      	; 0x1ec <main+0x6c>
+ 1ec:	00 00       	nop
+			_delay_ms(3000);
+			if (!(PINB & (1<<6))) {
+ 1ee:	b6 99       	sbic	0x16, 6	; 22
+ 1f0:	07 c0       	rjmp	.+14     	; 0x200 <main+0x80>
+				play_switcher = 1;
+ 1f2:	10 93 69 00 	sts	0x0069, r17
+ 1f6:	00 93 68 00 	sts	0x0068, r16
+			}
+		} 
+		if (PINB & (1<<6)){
+ 1fa:	b6 99       	sbic	0x16, 6	; 22
+ 1fc:	03 c0       	rjmp	.+6      	; 0x204 <main+0x84>
+ 1fe:	0e c0       	rjmp	.+28     	; 0x21c <main+0x9c>
+ 200:	b6 9b       	sbis	0x16, 6	; 22
+ 202:	05 c0       	rjmp	.+10     	; 0x20e <main+0x8e>
+			play_switcher = 0;
+ 204:	10 92 69 00 	sts	0x0069, r1
+ 208:	10 92 68 00 	sts	0x0068, r1
+			PORTD |= (1<<PIND6);
+ 20c:	96 9a       	sbi	0x12, 6	; 18
+		}
+		if (play_switcher == 1){
+ 20e:	80 91 68 00 	lds	r24, 0x0068
+ 212:	90 91 69 00 	lds	r25, 0x0069
+ 216:	01 97       	sbiw	r24, 0x01	; 1
+ 218:	09 f0       	breq	.+2      	; 0x21c <main+0x9c>
+ 21a:	64 c0       	rjmp	.+200    	; 0x2e4 <main+0x164>
+			PORTD &= ~(1<<PIND6);//отпереть электромагнит шахмат
+ 21c:	96 98       	cbi	0x12, 6	; 18
+			
+			if (!(PIND & (1<<PIND3))) {//тура
+ 21e:	83 99       	sbic	0x10, 3	; 16
+ 220:	61 c0       	rjmp	.+194    	; 0x2e4 <main+0x164>
+ 222:	83 e2       	ldi	r24, 0x23	; 35
+ 224:	94 ef       	ldi	r25, 0xF4	; 244
+ 226:	01 97       	sbiw	r24, 0x01	; 1
+ 228:	f1 f7       	brne	.-4      	; 0x226 <main+0xa6>
+ 22a:	00 c0       	rjmp	.+0      	; 0x22c <main+0xac>
+ 22c:	00 00       	nop
+				_delay_ms(250);
+				if (!(PIND & (1<<PIND3))) {
+ 22e:	83 99       	sbic	0x10, 3	; 16
+ 230:	59 c0       	rjmp	.+178    	; 0x2e4 <main+0x164>
+ 232:	9f e9       	ldi	r25, 0x9F	; 159
+ 234:	26 e8       	ldi	r18, 0x86	; 134
+ 236:	81 e0       	ldi	r24, 0x01	; 1
+ 238:	91 50       	subi	r25, 0x01	; 1
+ 23a:	20 40       	sbci	r18, 0x00	; 0
+ 23c:	80 40       	sbci	r24, 0x00	; 0
+ 23e:	e1 f7       	brne	.-8      	; 0x238 <main+0xb8>
+ 240:	00 c0       	rjmp	.+0      	; 0x242 <main+0xc2>
+ 242:	00 00       	nop
+					_delay_ms(500);
+					if (officer_switcher == 0){
+ 244:	80 91 64 00 	lds	r24, 0x0064
+ 248:	90 91 65 00 	lds	r25, 0x0065
+ 24c:	89 2b       	or	r24, r25
+ 24e:	59 f4       	brne	.+22     	; 0x266 <main+0xe6>
+ 250:	cc 2d       	mov	r28, r12
+ 252:	dd 2d       	mov	r29, r13
+						for (int i=0; i<5000; i++) {//2590
+							officer_forward();
+ 254:	7b df       	rcall	.-266    	; 0x14c <officer_forward>
+							if (!(PIND & (1<<PIND7))){//концевик офицера вперед
+ 256:	87 9b       	sbis	0x10, 7	; 16
+ 258:	02 c0       	rjmp	.+4      	; 0x25e <main+0xde>
+ 25a:	21 97       	sbiw	r28, 0x01	; 1
+			if (!(PIND & (1<<PIND3))) {//тура
+				_delay_ms(250);
+				if (!(PIND & (1<<PIND3))) {
+					_delay_ms(500);
+					if (officer_switcher == 0){
+						for (int i=0; i<5000; i++) {//2590
+ 25c:	d9 f7       	brne	.-10     	; 0x254 <main+0xd4>
+							officer_forward();
+							if (!(PIND & (1<<PIND7))){//концевик офицера вперед
+								break;
+							}
+						}
+						officer_switcher = 1;
+ 25e:	10 93 65 00 	sts	0x0065, r17
+ 262:	00 93 64 00 	sts	0x0064, r16
+					}
+					//if ((!(PIND & (1<<PIND2)))&&(!(PIND & (1<<PIND2)))) {//конь
+					if ((!(PIND & (1<<PIND2)))&&(!(PIND & (1<<PIND7)))) {//конь
+ 266:	82 99       	sbic	0x10, 2	; 16
+ 268:	3d c0       	rjmp	.+122    	; 0x2e4 <main+0x164>
+ 26a:	87 99       	sbic	0x10, 7	; 16
+ 26c:	3b c0       	rjmp	.+118    	; 0x2e4 <main+0x164>
+ 26e:	83 e2       	ldi	r24, 0x23	; 35
+ 270:	94 ef       	ldi	r25, 0xF4	; 244
+ 272:	01 97       	sbiw	r24, 0x01	; 1
+ 274:	f1 f7       	brne	.-4      	; 0x272 <main+0xf2>
+ 276:	00 c0       	rjmp	.+0      	; 0x278 <main+0xf8>
+ 278:	00 00       	nop
+						_delay_ms(250);
+						if ((!(PIND & (1<<PIND2)))&&(!(PIND & (1<<PIND7)))) {
+ 27a:	82 99       	sbic	0x10, 2	; 16
+ 27c:	33 c0       	rjmp	.+102    	; 0x2e4 <main+0x164>
+ 27e:	87 99       	sbic	0x10, 7	; 16
+ 280:	31 c0       	rjmp	.+98     	; 0x2e4 <main+0x164>
+							if (horse_switcher == 0){
+ 282:	80 91 60 00 	lds	r24, 0x0060
+ 286:	90 91 61 00 	lds	r25, 0x0061
+ 28a:	89 2b       	or	r24, r25
+ 28c:	09 f0       	breq	.+2      	; 0x290 <main+0x110>
+ 28e:	46 c0       	rjmp	.+140    	; 0x31c <main+0x19c>
+								PORTD |= (1 << PIND0);//звук коня
+ 290:	90 9a       	sbi	0x12, 0	; 18
+								//_delay_ms(5000);
+								//PORTD &= ~(1 << PIND0);//выключить звук коня
+								horse_switcher = 1;
+ 292:	10 93 61 00 	sts	0x0061, r17
+ 296:	00 93 60 00 	sts	0x0060, r16
+ 29a:	40 c0       	rjmp	.+128    	; 0x31c <main+0x19c>
+							}
+							if (king_switcher == 0){								
+ 29c:	ca 2d       	mov	r28, r10
+ 29e:	db 2d       	mov	r29, r11
+								for (int j=0; j<500; j++) {//492
+									king_forward();
+ 2a0:	07 df       	rcall	.-498    	; 0xb0 <king_forward>
+									if (!(PINC & (1<<PINC0))){//концевик короля вперед
+ 2a2:	98 9b       	sbis	0x13, 0	; 19
+ 2a4:	02 c0       	rjmp	.+4      	; 0x2aa <main+0x12a>
+ 2a6:	21 97       	sbiw	r28, 0x01	; 1
+								//_delay_ms(5000);
+								//PORTD &= ~(1 << PIND0);//выключить звук коня
+								horse_switcher = 1;
+							}
+							if (king_switcher == 0){								
+								for (int j=0; j<500; j++) {//492
+ 2a8:	d9 f7       	brne	.-10     	; 0x2a0 <main+0x120>
+									king_forward();
+									if (!(PINC & (1<<PINC0))){//концевик короля вперед
+										break;
+									}
+								}
+							king_switcher = 1;
+ 2aa:	10 93 67 00 	sts	0x0067, r17
+ 2ae:	00 93 66 00 	sts	0x0066, r16
+							}
+							if (!(PIND & (1<<PIND1))){//королева
+ 2b2:	81 99       	sbic	0x10, 1	; 16
+ 2b4:	17 c0       	rjmp	.+46     	; 0x2e4 <main+0x164>
+ 2b6:	8b e7       	ldi	r24, 0x7B	; 123
+ 2b8:	92 e9       	ldi	r25, 0x92	; 146
+ 2ba:	01 97       	sbiw	r24, 0x01	; 1
+ 2bc:	f1 f7       	brne	.-4      	; 0x2ba <main+0x13a>
+ 2be:	00 c0       	rjmp	.+0      	; 0x2c0 <main+0x140>
+ 2c0:	00 00       	nop
+								_delay_ms(150);
+								if (!(PIND & (1<<PIND1))){
+ 2c2:	81 99       	sbic	0x10, 1	; 16
+ 2c4:	0f c0       	rjmp	.+30     	; 0x2e4 <main+0x164>
+									PORTD &= ~(1 << PIND0);
+ 2c6:	90 98       	cbi	0x12, 0	; 18
+									PORTB |= (1 << PINB7);//звук падшего короля
+ 2c8:	c7 9a       	sbi	0x18, 7	; 24
+ 2ca:	9f e3       	ldi	r25, 0x3F	; 63
+ 2cc:	2e e7       	ldi	r18, 0x7E	; 126
+ 2ce:	85 e0       	ldi	r24, 0x05	; 5
+ 2d0:	91 50       	subi	r25, 0x01	; 1
+ 2d2:	20 40       	sbci	r18, 0x00	; 0
+ 2d4:	80 40       	sbci	r24, 0x00	; 0
+ 2d6:	e1 f7       	brne	.-8      	; 0x2d0 <main+0x150>
+ 2d8:	00 c0       	rjmp	.+0      	; 0x2da <main+0x15a>
+ 2da:	00 00       	nop
+									_delay_ms(1800);
+									door_open = 1;
+ 2dc:	10 93 63 00 	sts	0x0063, r17
+ 2e0:	00 93 62 00 	sts	0x0062, r16
+						}
+					}
+				}
+			}	
+		}	
+		if (!(PIND & (1<<PIND4))) {//back
+ 2e4:	84 99       	sbic	0x10, 4	; 16
+ 2e6:	68 cf       	rjmp	.-304    	; 0x1b8 <main+0x38>
+ 2e8:	83 ed       	ldi	r24, 0xD3	; 211
+ 2ea:	90 e3       	ldi	r25, 0x30	; 48
+ 2ec:	01 97       	sbiw	r24, 0x01	; 1
+ 2ee:	f1 f7       	brne	.-4      	; 0x2ec <main+0x16c>
+ 2f0:	00 c0       	rjmp	.+0      	; 0x2f2 <main+0x172>
+ 2f2:	00 00       	nop
+			_delay_ms(50);
+			if (!(PIND & (1<<PIND4))) {
+ 2f4:	84 99       	sbic	0x10, 4	; 16
+ 2f6:	0e c0       	rjmp	.+28     	; 0x314 <main+0x194>
+				for (int i=0; i<5000; i++) {
+					if (!(PINB & (1<<PINB0))){//концевик офицера назад
+ 2f8:	b0 99       	sbic	0x16, 0	; 22
+ 2fa:	1e c0       	rjmp	.+60     	; 0x338 <main+0x1b8>
+ 2fc:	17 c0       	rjmp	.+46     	; 0x32c <main+0x1ac>
+ 2fe:	b0 9b       	sbis	0x16, 0	; 22
+ 300:	15 c0       	rjmp	.+42     	; 0x32c <main+0x1ac>
+						break;
+					}
+					officer_back();
+ 302:	0a df       	rcall	.-492    	; 0x118 <officer_back>
+ 304:	21 97       	sbiw	r28, 0x01	; 1
+			}	
+		}	
+		if (!(PIND & (1<<PIND4))) {//back
+			_delay_ms(50);
+			if (!(PIND & (1<<PIND4))) {
+				for (int i=0; i<5000; i++) {
+ 306:	d9 f7       	brne	.-10     	; 0x2fe <main+0x17e>
+ 308:	11 c0       	rjmp	.+34     	; 0x32c <main+0x1ac>
+						break;
+					}
+					officer_back();
+				}
+				for (int i=0; i<5000; i++) {
+					if (!(PINC & (1<<PINC1))){//концевик короля назад
+ 30a:	99 9b       	sbis	0x13, 1	; 19
+ 30c:	03 c0       	rjmp	.+6      	; 0x314 <main+0x194>
+						break;
+					}
+					king_back();
+ 30e:	ea de       	rcall	.-556    	; 0xe4 <king_back>
+ 310:	21 97       	sbiw	r28, 0x01	; 1
+					if (!(PINB & (1<<PINB0))){//концевик офицера назад
+						break;
+					}
+					officer_back();
+				}
+				for (int i=0; i<5000; i++) {
+ 312:	d9 f7       	brne	.-10     	; 0x30a <main+0x18a>
+						break;
+					}
+					king_back();
+				}
+			}
+			PORTD = 0x00;
+ 314:	12 ba       	out	0x12, r1	; 18
+			PORTD = 0x00;
+ 316:	12 ba       	out	0x12, r1	; 18
+			DDRD = 0x00;
+ 318:	11 ba       	out	0x11, r1	; 17
+ 31a:	4e cf       	rjmp	.-356    	; 0x1b8 <main+0x38>
+								PORTD |= (1 << PIND0);//звук коня
+								//_delay_ms(5000);
+								//PORTD &= ~(1 << PIND0);//выключить звук коня
+								horse_switcher = 1;
+							}
+							if (king_switcher == 0){								
+ 31c:	80 91 66 00 	lds	r24, 0x0066
+ 320:	90 91 67 00 	lds	r25, 0x0067
+ 324:	89 2b       	or	r24, r25
+ 326:	09 f4       	brne	.+2      	; 0x32a <main+0x1aa>
+ 328:	b9 cf       	rjmp	.-142    	; 0x29c <main+0x11c>
+ 32a:	c3 cf       	rjmp	.-122    	; 0x2b2 <main+0x132>
+						break;
+					}
+					officer_back();
+				}
+				for (int i=0; i<5000; i++) {
+					if (!(PINC & (1<<PINC1))){//концевик короля назад
+ 32c:	99 9b       	sbis	0x13, 1	; 19
+ 32e:	f2 cf       	rjmp	.-28     	; 0x314 <main+0x194>
+						break;
+					}
+					king_back();
+ 330:	d9 de       	rcall	.-590    	; 0xe4 <king_back>
+ 332:	ce 2d       	mov	r28, r14
+ 334:	df 2d       	mov	r29, r15
+ 336:	e9 cf       	rjmp	.-46     	; 0x30a <main+0x18a>
+			if (!(PIND & (1<<PIND4))) {
+				for (int i=0; i<5000; i++) {
+					if (!(PINB & (1<<PINB0))){//концевик офицера назад
+						break;
+					}
+					officer_back();
+ 338:	ef de       	rcall	.-546    	; 0x118 <officer_back>
+ 33a:	ce 2d       	mov	r28, r14
+ 33c:	df 2d       	mov	r29, r15
+ 33e:	df cf       	rjmp	.-66     	; 0x2fe <main+0x17e>
+
+00000340 <_exit>:
+ 340:	f8 94       	cli
+
+00000342 <__stop_program>:
+ 342:	ff cf       	rjmp	.-2      	; 0x342 <__stop_program>

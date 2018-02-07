@@ -1,0 +1,966 @@
+
+Labirint-door.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000530  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000004  00800060  00000530  000005c4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000009  00800064  00800064  000005c8  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000005c8  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000005f8  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000078  00000000  00000000  00000634  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000006ef  00000000  00000000  000006ac  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000243  00000000  00000000  00000d9b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000563  00000000  00000000  00000fde  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000150  00000000  00000000  00001544  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000029d  00000000  00000000  00001694  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000004c2  00000000  00000000  00001931  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000080  00000000  00000000  00001df3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	2c c0       	rjmp	.+88     	; 0x5c <__bad_interrupt>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	8f c0       	rjmp	.+286    	; 0x132 <__vector_9>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e0 e3       	ldi	r30, 0x30	; 48
+  3a:	f5 e0       	ldi	r31, 0x05	; 5
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a4 36       	cpi	r26, 0x64	; 100
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+
+00000048 <__do_clear_bss>:
+  48:	20 e0       	ldi	r18, 0x00	; 0
+  4a:	a4 e6       	ldi	r26, 0x64	; 100
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	ad 36       	cpi	r26, 0x6D	; 109
+  54:	b2 07       	cpc	r27, r18
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	9d d1       	rcall	.+826    	; 0x394 <main>
+  5a:	68 c2       	rjmp	.+1232   	; 0x52c <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <preset>:
+	//asm("sei");
+	sei();
+}
+
+void down(){
+	cycle_compl = true;
+  5e:	80 e4       	ldi	r24, 0x40	; 64
+  60:	87 bb       	out	0x17, r24	; 23
+  62:	8c e3       	ldi	r24, 0x3C	; 60
+  64:	84 bb       	out	0x14, r24	; 20
+  66:	82 ef       	ldi	r24, 0xF2	; 242
+  68:	81 bb       	out	0x11, r24	; 17
+  6a:	18 ba       	out	0x18, r1	; 24
+  6c:	15 ba       	out	0x15, r1	; 21
+  6e:	12 ba       	out	0x12, r1	; 18
+  70:	08 95       	ret
+
+00000072 <timer0_init>:
+  72:	83 e0       	ldi	r24, 0x03	; 3
+  74:	83 bf       	out	0x33, r24	; 51
+  76:	81 e0       	ldi	r24, 0x01	; 1
+  78:	89 bf       	out	0x39, r24	; 57
+  7a:	78 94       	sei
+  7c:	08 95       	ret
+
+0000007e <up>:
+}
+
+void up(){
+	if (cycle_compl){
+  7e:	80 91 68 00 	lds	r24, 0x0068
+  82:	88 23       	and	r24, r24
+  84:	79 f1       	breq	.+94     	; 0xe4 <up+0x66>
+		d++;
+  86:	80 91 69 00 	lds	r24, 0x0069
+  8a:	90 91 6a 00 	lds	r25, 0x006A
+  8e:	01 96       	adiw	r24, 0x01	; 1
+  90:	90 93 6a 00 	sts	0x006A, r25
+  94:	80 93 69 00 	sts	0x0069, r24
+// 			case 2: PORTB |= (1<<PINB0)|(1<<PINB1);break;
+// 			case 3: PORTB |= (1<<PINB0)|(1<<PINB1)|(1<<PINB2);break;
+// 			case 4: PORTB |= (1<<PINB0)|(1<<PINB1)|(1<<PINB2)|(1<<PINB3);break;
+// 			case 5: PORTB |= (1<<PINB0)|(1<<PINB1)|(1<<PINB2)|(1<<PINB3)|(1<<PINB4);break;
+// 		}
+		if (d == 2){
+  98:	82 30       	cpi	r24, 0x02	; 2
+  9a:	91 05       	cpc	r25, r1
+  9c:	49 f4       	brne	.+18     	; 0xb0 <up+0x32>
+			n = 1;
+  9e:	81 e0       	ldi	r24, 0x01	; 1
+  a0:	90 e0       	ldi	r25, 0x00	; 0
+  a2:	90 93 67 00 	sts	0x0067, r25
+  a6:	80 93 66 00 	sts	0x0066, r24
+			reset = true;
+  aa:	80 93 64 00 	sts	0x0064, r24
+  ae:	18 c0       	rjmp	.+48     	; 0xe0 <up+0x62>
+		}
+		if (d == 6){
+  b0:	86 30       	cpi	r24, 0x06	; 6
+  b2:	91 05       	cpc	r25, r1
+  b4:	51 f4       	brne	.+20     	; 0xca <up+0x4c>
+			n = 2;
+  b6:	82 e0       	ldi	r24, 0x02	; 2
+  b8:	90 e0       	ldi	r25, 0x00	; 0
+  ba:	90 93 67 00 	sts	0x0067, r25
+  be:	80 93 66 00 	sts	0x0066, r24
+			reset = true;
+  c2:	81 e0       	ldi	r24, 0x01	; 1
+  c4:	80 93 64 00 	sts	0x0064, r24
+  c8:	0b c0       	rjmp	.+22     	; 0xe0 <up+0x62>
+		}
+		if (d == 8){
+  ca:	08 97       	sbiw	r24, 0x08	; 8
+  cc:	49 f4       	brne	.+18     	; 0xe0 <up+0x62>
+			n = 3;
+  ce:	83 e0       	ldi	r24, 0x03	; 3
+  d0:	90 e0       	ldi	r25, 0x00	; 0
+  d2:	90 93 67 00 	sts	0x0067, r25
+  d6:	80 93 66 00 	sts	0x0066, r24
+			reset = true;
+  da:	81 e0       	ldi	r24, 0x01	; 1
+  dc:	80 93 64 00 	sts	0x0064, r24
+		}
+		cycle_compl=false;	
+  e0:	10 92 68 00 	sts	0x0068, r1
+  e4:	08 95       	ret
+
+000000e6 <delay>:
+	}
+}
+
+void delay(int t) {
+	for (int i=0; i<t; i++) {
+  e6:	18 16       	cp	r1, r24
+  e8:	19 06       	cpc	r1, r25
+  ea:	44 f4       	brge	.+16     	; 0xfc <delay+0x16>
+  ec:	20 e0       	ldi	r18, 0x00	; 0
+  ee:	30 e0       	ldi	r19, 0x00	; 0
+		nop();
+  f0:	00 00       	nop
+		cycle_compl=false;	
+	}
+}
+
+void delay(int t) {
+	for (int i=0; i<t; i++) {
+  f2:	2f 5f       	subi	r18, 0xFF	; 255
+  f4:	3f 4f       	sbci	r19, 0xFF	; 255
+  f6:	28 17       	cp	r18, r24
+  f8:	39 07       	cpc	r19, r25
+  fa:	d1 f7       	brne	.-12     	; 0xf0 <delay+0xa>
+  fc:	08 95       	ret
+
+000000fe <longDelay>:
+		nop();
+	} 
+}
+
+void longDelay(int t) {
+  fe:	0f 93       	push	r16
+ 100:	1f 93       	push	r17
+ 102:	cf 93       	push	r28
+ 104:	df 93       	push	r29
+	for (int i=0; i<t; i++) {
+ 106:	18 16       	cp	r1, r24
+ 108:	19 06       	cpc	r1, r25
+ 10a:	54 f4       	brge	.+20     	; 0x120 <longDelay+0x22>
+ 10c:	8c 01       	movw	r16, r24
+ 10e:	c0 e0       	ldi	r28, 0x00	; 0
+ 110:	d0 e0       	ldi	r29, 0x00	; 0
+		delay(300);
+ 112:	8c e2       	ldi	r24, 0x2C	; 44
+ 114:	91 e0       	ldi	r25, 0x01	; 1
+ 116:	e7 df       	rcall	.-50     	; 0xe6 <delay>
+		nop();
+	} 
+}
+
+void longDelay(int t) {
+	for (int i=0; i<t; i++) {
+ 118:	21 96       	adiw	r28, 0x01	; 1
+ 11a:	c0 17       	cp	r28, r16
+ 11c:	d1 07       	cpc	r29, r17
+ 11e:	c9 f7       	brne	.-14     	; 0x112 <longDelay+0x14>
+		delay(300);
+	}
+}
+ 120:	df 91       	pop	r29
+ 122:	cf 91       	pop	r28
+ 124:	1f 91       	pop	r17
+ 126:	0f 91       	pop	r16
+ 128:	08 95       	ret
+
+0000012a <ballDelay>:
+
+void ballDelay(void) {
+	longDelay(2);
+ 12a:	82 e0       	ldi	r24, 0x02	; 2
+ 12c:	90 e0       	ldi	r25, 0x00	; 0
+ 12e:	e7 df       	rcall	.-50     	; 0xfe <longDelay>
+ 130:	08 95       	ret
+
+00000132 <__vector_9>:
+}
+
+ISR (TIMER0_OVF_vect) {
+ 132:	1f 92       	push	r1
+ 134:	0f 92       	push	r0
+ 136:	0f b6       	in	r0, 0x3f	; 63
+ 138:	0f 92       	push	r0
+ 13a:	11 24       	eor	r1, r1
+ 13c:	2f 93       	push	r18
+ 13e:	3f 93       	push	r19
+ 140:	4f 93       	push	r20
+ 142:	5f 93       	push	r21
+ 144:	6f 93       	push	r22
+ 146:	7f 93       	push	r23
+ 148:	8f 93       	push	r24
+ 14a:	9f 93       	push	r25
+ 14c:	af 93       	push	r26
+ 14e:	bf 93       	push	r27
+	count++;
+ 150:	80 91 6b 00 	lds	r24, 0x006B
+ 154:	90 91 6c 00 	lds	r25, 0x006C
+ 158:	01 96       	adiw	r24, 0x01	; 1
+ 15a:	90 93 6c 00 	sts	0x006C, r25
+ 15e:	80 93 6b 00 	sts	0x006B, r24
+	
+	switch(n){
+ 162:	20 91 66 00 	lds	r18, 0x0066
+ 166:	30 91 67 00 	lds	r19, 0x0067
+ 16a:	22 30       	cpi	r18, 0x02	; 2
+ 16c:	31 05       	cpc	r19, r1
+ 16e:	79 f0       	breq	.+30     	; 0x18e <__vector_9+0x5c>
+ 170:	23 30       	cpi	r18, 0x03	; 3
+ 172:	31 05       	cpc	r19, r1
+ 174:	a9 f0       	breq	.+42     	; 0x1a0 <__vector_9+0x6e>
+ 176:	21 30       	cpi	r18, 0x01	; 1
+ 178:	31 05       	cpc	r19, r1
+ 17a:	21 f5       	brne	.+72     	; 0x1c4 <__vector_9+0x92>
+	case 1:
+		if (count % 16 == 0){
+ 17c:	8f 70       	andi	r24, 0x0F	; 15
+ 17e:	99 27       	eor	r25, r25
+ 180:	89 2b       	or	r24, r25
+ 182:	01 f5       	brne	.+64     	; 0x1c4 <__vector_9+0x92>
+			PORTC ^= (1<<PINC2);//светодиод
+ 184:	95 b3       	in	r25, 0x15	; 21
+ 186:	84 e0       	ldi	r24, 0x04	; 4
+ 188:	89 27       	eor	r24, r25
+ 18a:	85 bb       	out	0x15, r24	; 21
+ 18c:	1b c0       	rjmp	.+54     	; 0x1c4 <__vector_9+0x92>
+		}
+		break;
+	case 2:
+		if (count % 4 == 0){
+ 18e:	83 70       	andi	r24, 0x03	; 3
+ 190:	99 27       	eor	r25, r25
+ 192:	89 2b       	or	r24, r25
+ 194:	b9 f4       	brne	.+46     	; 0x1c4 <__vector_9+0x92>
+			PORTC ^= (1<<PINC2);//светодиод
+ 196:	95 b3       	in	r25, 0x15	; 21
+ 198:	84 e0       	ldi	r24, 0x04	; 4
+ 19a:	89 27       	eor	r24, r25
+ 19c:	85 bb       	out	0x15, r24	; 21
+ 19e:	12 c0       	rjmp	.+36     	; 0x1c4 <__vector_9+0x92>
+		}
+		break;
+	case 3:
+		PORTC |= (1<<PINC2);//светодиод
+ 1a0:	aa 9a       	sbi	0x15, 2	; 21
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1a2:	2f ef       	ldi	r18, 0xFF	; 255
+ 1a4:	84 e3       	ldi	r24, 0x34	; 52
+ 1a6:	9c e0       	ldi	r25, 0x0C	; 12
+ 1a8:	21 50       	subi	r18, 0x01	; 1
+ 1aa:	80 40       	sbci	r24, 0x00	; 0
+ 1ac:	90 40       	sbci	r25, 0x00	; 0
+ 1ae:	e1 f7       	brne	.-8      	; 0x1a8 <__vector_9+0x76>
+ 1b0:	00 c0       	rjmp	.+0      	; 0x1b2 <__vector_9+0x80>
+ 1b2:	00 00       	nop
+		_delay_ms(4000);
+		PORTC &= ~(1<<PINC2);//потушить светодиод
+ 1b4:	aa 98       	cbi	0x15, 2	; 21
+		PORTC &= ~(1<<PINC3);//открыть дверь
+ 1b6:	ab 98       	cbi	0x15, 3	; 21
+		cli();
+ 1b8:	f8 94       	cli
+		TIMSK = 0x00;
+ 1ba:	19 be       	out	0x39, r1	; 57
+		two_sec = false;
+ 1bc:	10 92 65 00 	sts	0x0065, r1
+		door = false;
+ 1c0:	10 92 60 00 	sts	0x0060, r1
+		break;
+	}
+	
+	if (d == 0){
+ 1c4:	80 91 69 00 	lds	r24, 0x0069
+ 1c8:	90 91 6a 00 	lds	r25, 0x006A
+ 1cc:	89 2b       	or	r24, r25
+ 1ce:	e9 f4       	brne	.+58     	; 0x20a <__vector_9+0xd8>
+		if (count % 40 == 0){
+ 1d0:	40 91 6b 00 	lds	r20, 0x006B
+ 1d4:	50 91 6c 00 	lds	r21, 0x006C
+ 1d8:	9a 01       	movw	r18, r20
+ 1da:	ad ec       	ldi	r26, 0xCD	; 205
+ 1dc:	bc ec       	ldi	r27, 0xCC	; 204
+ 1de:	9a d1       	rcall	.+820    	; 0x514 <__umulhisi3>
+ 1e0:	96 95       	lsr	r25
+ 1e2:	87 95       	ror	r24
+ 1e4:	92 95       	swap	r25
+ 1e6:	82 95       	swap	r24
+ 1e8:	8f 70       	andi	r24, 0x0F	; 15
+ 1ea:	89 27       	eor	r24, r25
+ 1ec:	9f 70       	andi	r25, 0x0F	; 15
+ 1ee:	89 27       	eor	r24, r25
+ 1f0:	68 e2       	ldi	r22, 0x28	; 40
+ 1f2:	68 9f       	mul	r22, r24
+ 1f4:	90 01       	movw	r18, r0
+ 1f6:	69 9f       	mul	r22, r25
+ 1f8:	30 0d       	add	r19, r0
+ 1fa:	11 24       	eor	r1, r1
+ 1fc:	42 17       	cp	r20, r18
+ 1fe:	53 07       	cpc	r21, r19
+ 200:	21 f4       	brne	.+8      	; 0x20a <__vector_9+0xd8>
+			PORTC ^= (1<<PINC2);//светодиод
+ 202:	95 b3       	in	r25, 0x15	; 21
+ 204:	84 e0       	ldi	r24, 0x04	; 4
+ 206:	89 27       	eor	r24, r25
+ 208:	85 bb       	out	0x15, r24	; 21
+		}
+	}
+	
+	if (count > 300 && two_sec){//5sec
+ 20a:	80 91 6b 00 	lds	r24, 0x006B
+ 20e:	90 91 6c 00 	lds	r25, 0x006C
+ 212:	8d 32       	cpi	r24, 0x2D	; 45
+ 214:	91 40       	sbci	r25, 0x01	; 1
+ 216:	28 f0       	brcs	.+10     	; 0x222 <__vector_9+0xf0>
+ 218:	80 91 65 00 	lds	r24, 0x0065
+ 21c:	81 11       	cpse	r24, r1
+		two_sec = false;
+ 21e:	10 92 65 00 	sts	0x0065, r1
+	}
+	
+	if (reset){
+ 222:	80 91 64 00 	lds	r24, 0x0064
+ 226:	88 23       	and	r24, r24
+ 228:	49 f0       	breq	.+18     	; 0x23c <__vector_9+0x10a>
+		count = 0;
+ 22a:	10 92 6c 00 	sts	0x006C, r1
+ 22e:	10 92 6b 00 	sts	0x006B, r1
+		two_sec = true;
+ 232:	81 e0       	ldi	r24, 0x01	; 1
+ 234:	80 93 65 00 	sts	0x0065, r24
+		reset = false;
+ 238:	10 92 64 00 	sts	0x0064, r1
+	}
+	
+	if (count > 1000){//в случае "простоя" обнуляемся
+ 23c:	80 91 6b 00 	lds	r24, 0x006B
+ 240:	90 91 6c 00 	lds	r25, 0x006C
+ 244:	89 3e       	cpi	r24, 0xE9	; 233
+ 246:	93 40       	sbci	r25, 0x03	; 3
+ 248:	40 f0       	brcs	.+16     	; 0x25a <__vector_9+0x128>
+		d = 0;
+ 24a:	10 92 6a 00 	sts	0x006A, r1
+ 24e:	10 92 69 00 	sts	0x0069, r1
+		count = 0;
+ 252:	10 92 6c 00 	sts	0x006C, r1
+ 256:	10 92 6b 00 	sts	0x006B, r1
+	}
+}
+ 25a:	bf 91       	pop	r27
+ 25c:	af 91       	pop	r26
+ 25e:	9f 91       	pop	r25
+ 260:	8f 91       	pop	r24
+ 262:	7f 91       	pop	r23
+ 264:	6f 91       	pop	r22
+ 266:	5f 91       	pop	r21
+ 268:	4f 91       	pop	r20
+ 26a:	3f 91       	pop	r19
+ 26c:	2f 91       	pop	r18
+ 26e:	0f 90       	pop	r0
+ 270:	0f be       	out	0x3f, r0	; 63
+ 272:	0f 90       	pop	r0
+ 274:	1f 90       	pop	r1
+ 276:	18 95       	reti
+
+00000278 <ball>:
+
+void ball(void) {
+	PORTD = 0b00010000;
+ 278:	80 e1       	ldi	r24, 0x10	; 16
+ 27a:	82 bb       	out	0x12, r24	; 18
+	ballDelay();
+ 27c:	56 df       	rcall	.-340    	; 0x12a <ballDelay>
+	PORTD = 0b00110000;
+ 27e:	80 e3       	ldi	r24, 0x30	; 48
+ 280:	82 bb       	out	0x12, r24	; 18
+	ballDelay();
+ 282:	53 df       	rcall	.-346    	; 0x12a <ballDelay>
+	PORTD = 0b00100000;
+ 284:	80 e2       	ldi	r24, 0x20	; 32
+ 286:	82 bb       	out	0x12, r24	; 18
+	ballDelay();
+ 288:	50 df       	rcall	.-352    	; 0x12a <ballDelay>
+	PORTD = 0b01100000;
+ 28a:	80 e6       	ldi	r24, 0x60	; 96
+ 28c:	82 bb       	out	0x12, r24	; 18
+	ballDelay();
+ 28e:	4d df       	rcall	.-358    	; 0x12a <ballDelay>
+	PORTD = 0b01000000;
+ 290:	80 e4       	ldi	r24, 0x40	; 64
+ 292:	82 bb       	out	0x12, r24	; 18
+	ballDelay();
+ 294:	4a df       	rcall	.-364    	; 0x12a <ballDelay>
+	PORTD = 0b11000000;
+ 296:	80 ec       	ldi	r24, 0xC0	; 192
+ 298:	82 bb       	out	0x12, r24	; 18
+	ballDelay();
+ 29a:	47 df       	rcall	.-370    	; 0x12a <ballDelay>
+	PORTD = 0b10000000;
+ 29c:	80 e8       	ldi	r24, 0x80	; 128
+ 29e:	82 bb       	out	0x12, r24	; 18
+	ballDelay();
+ 2a0:	44 df       	rcall	.-376    	; 0x12a <ballDelay>
+	PORTD = 0b10010000;
+ 2a2:	80 e9       	ldi	r24, 0x90	; 144
+ 2a4:	82 bb       	out	0x12, r24	; 18
+	ballDelay();
+ 2a6:	41 df       	rcall	.-382    	; 0x12a <ballDelay>
+	PORTD = 0x00;
+ 2a8:	12 ba       	out	0x12, r1	; 18
+ 2aa:	08 95       	ret
+
+000002ac <give_next_ball>:
+}
+
+void give_next_ball(int *give_ball, int engine_count) {
+ 2ac:	0f 93       	push	r16
+ 2ae:	1f 93       	push	r17
+ 2b0:	cf 93       	push	r28
+ 2b2:	df 93       	push	r29
+	if (*give_ball == 1 && ball_count > 0) {
+ 2b4:	fc 01       	movw	r30, r24
+ 2b6:	20 81       	ld	r18, Z
+ 2b8:	31 81       	ldd	r19, Z+1	; 0x01
+ 2ba:	21 30       	cpi	r18, 0x01	; 1
+ 2bc:	31 05       	cpc	r19, r1
+ 2be:	e9 f4       	brne	.+58     	; 0x2fa <give_next_ball+0x4e>
+ 2c0:	20 91 61 00 	lds	r18, 0x0061
+ 2c4:	30 91 62 00 	lds	r19, 0x0062
+ 2c8:	12 16       	cp	r1, r18
+ 2ca:	13 06       	cpc	r1, r19
+ 2cc:	b4 f4       	brge	.+44     	; 0x2fa <give_next_ball+0x4e>
+		*give_ball = 0;
+ 2ce:	11 82       	std	Z+1, r1	; 0x01
+ 2d0:	10 82       	st	Z, r1
+		ball_count--;
+ 2d2:	80 91 61 00 	lds	r24, 0x0061
+ 2d6:	90 91 62 00 	lds	r25, 0x0062
+ 2da:	01 97       	sbiw	r24, 0x01	; 1
+ 2dc:	90 93 62 00 	sts	0x0062, r25
+ 2e0:	80 93 61 00 	sts	0x0061, r24
+		for (int i=0; i<engine_count; i++) {
+ 2e4:	16 16       	cp	r1, r22
+ 2e6:	17 06       	cpc	r1, r23
+ 2e8:	44 f4       	brge	.+16     	; 0x2fa <give_next_ball+0x4e>
+ 2ea:	8b 01       	movw	r16, r22
+ 2ec:	c0 e0       	ldi	r28, 0x00	; 0
+ 2ee:	d0 e0       	ldi	r29, 0x00	; 0
+			ball();
+ 2f0:	c3 df       	rcall	.-122    	; 0x278 <ball>
+
+void give_next_ball(int *give_ball, int engine_count) {
+	if (*give_ball == 1 && ball_count > 0) {
+		*give_ball = 0;
+		ball_count--;
+		for (int i=0; i<engine_count; i++) {
+ 2f2:	21 96       	adiw	r28, 0x01	; 1
+ 2f4:	c0 17       	cp	r28, r16
+ 2f6:	d1 07       	cpc	r29, r17
+ 2f8:	d9 f7       	brne	.-10     	; 0x2f0 <give_next_ball+0x44>
+			ball();
+		}
+	}
+}
+ 2fa:	df 91       	pop	r29
+ 2fc:	cf 91       	pop	r28
+ 2fe:	1f 91       	pop	r17
+ 300:	0f 91       	pop	r16
+ 302:	08 95       	ret
+
+00000304 <number>:
+
+void number(int pin_gerkon, int *switcher, volatile uint8_t *port_gerkon, volatile uint8_t *port_diod, int pin_diod) {
+ 304:	0f 93       	push	r16
+	if (!(*port_gerkon & (1 << pin_gerkon))) {
+ 306:	da 01       	movw	r26, r20
+ 308:	ec 91       	ld	r30, X
+ 30a:	f0 e0       	ldi	r31, 0x00	; 0
+ 30c:	08 2e       	mov	r0, r24
+ 30e:	02 c0       	rjmp	.+4      	; 0x314 <number+0x10>
+ 310:	f5 95       	asr	r31
+ 312:	e7 95       	ror	r30
+ 314:	0a 94       	dec	r0
+ 316:	e2 f7       	brpl	.-8      	; 0x310 <number+0xc>
+ 318:	e0 fd       	sbrc	r30, 0
+ 31a:	3a c0       	rjmp	.+116    	; 0x390 <number+0x8c>
+ 31c:	e7 e9       	ldi	r30, 0x97	; 151
+ 31e:	fa e3       	ldi	r31, 0x3A	; 58
+ 320:	31 97       	sbiw	r30, 0x01	; 1
+ 322:	f1 f7       	brne	.-4      	; 0x320 <number+0x1c>
+ 324:	00 c0       	rjmp	.+0      	; 0x326 <number+0x22>
+ 326:	00 00       	nop
+		_delay_ms(60);
+		if (!(*port_gerkon & (1 << pin_gerkon))) {
+ 328:	4c 91       	ld	r20, X
+ 32a:	50 e0       	ldi	r21, 0x00	; 0
+ 32c:	fa 01       	movw	r30, r20
+ 32e:	02 c0       	rjmp	.+4      	; 0x334 <number+0x30>
+ 330:	f5 95       	asr	r31
+ 332:	e7 95       	ror	r30
+ 334:	8a 95       	dec	r24
+ 336:	e2 f7       	brpl	.-8      	; 0x330 <number+0x2c>
+ 338:	e0 fd       	sbrc	r30, 0
+ 33a:	2a c0       	rjmp	.+84     	; 0x390 <number+0x8c>
+			if (*switcher == 1){
+ 33c:	db 01       	movw	r26, r22
+ 33e:	8d 91       	ld	r24, X+
+ 340:	9c 91       	ld	r25, X
+ 342:	11 97       	sbiw	r26, 0x01	; 1
+ 344:	81 30       	cpi	r24, 0x01	; 1
+ 346:	91 05       	cpc	r25, r1
+ 348:	81 f4       	brne	.+32     	; 0x36a <number+0x66>
+				*port_diod |= 1 << pin_diod;
+ 34a:	f9 01       	movw	r30, r18
+ 34c:	40 81       	ld	r20, Z
+ 34e:	81 e0       	ldi	r24, 0x01	; 1
+ 350:	90 e0       	ldi	r25, 0x00	; 0
+ 352:	02 c0       	rjmp	.+4      	; 0x358 <number+0x54>
+ 354:	88 0f       	add	r24, r24
+ 356:	99 1f       	adc	r25, r25
+ 358:	0a 95       	dec	r16
+ 35a:	e2 f7       	brpl	.-8      	; 0x354 <number+0x50>
+ 35c:	84 2b       	or	r24, r20
+ 35e:	80 83       	st	Z, r24
+				*switcher = 2;
+ 360:	82 e0       	ldi	r24, 0x02	; 2
+ 362:	90 e0       	ldi	r25, 0x00	; 0
+ 364:	8d 93       	st	X+, r24
+ 366:	9c 93       	st	X, r25
+ 368:	13 c0       	rjmp	.+38     	; 0x390 <number+0x8c>
+				} else if (*switcher == 2){
+ 36a:	02 97       	sbiw	r24, 0x02	; 2
+ 36c:	89 f4       	brne	.+34     	; 0x390 <number+0x8c>
+				*port_diod &= ~(1 << pin_diod);
+ 36e:	d9 01       	movw	r26, r18
+ 370:	9c 91       	ld	r25, X
+ 372:	e1 e0       	ldi	r30, 0x01	; 1
+ 374:	f0 e0       	ldi	r31, 0x00	; 0
+ 376:	af 01       	movw	r20, r30
+ 378:	02 c0       	rjmp	.+4      	; 0x37e <number+0x7a>
+ 37a:	44 0f       	add	r20, r20
+ 37c:	55 1f       	adc	r21, r21
+ 37e:	0a 95       	dec	r16
+ 380:	e2 f7       	brpl	.-8      	; 0x37a <number+0x76>
+ 382:	84 2f       	mov	r24, r20
+ 384:	80 95       	com	r24
+ 386:	89 23       	and	r24, r25
+ 388:	8c 93       	st	X, r24
+				*switcher = 1;
+ 38a:	db 01       	movw	r26, r22
+ 38c:	ed 93       	st	X+, r30
+ 38e:	fc 93       	st	X, r31
+			}
+		}
+	}
+}
+ 390:	0f 91       	pop	r16
+ 392:	08 95       	ret
+
+00000394 <main>:
+
+int main (void)
+{
+ 394:	cf 93       	push	r28
+ 396:	df 93       	push	r29
+ 398:	cd b7       	in	r28, 0x3d	; 61
+ 39a:	de b7       	in	r29, 0x3e	; 62
+ 39c:	2e 97       	sbiw	r28, 0x0e	; 14
+ 39e:	0f b6       	in	r0, 0x3f	; 63
+ 3a0:	f8 94       	cli
+ 3a2:	de bf       	out	0x3e, r29	; 62
+ 3a4:	0f be       	out	0x3f, r0	; 63
+ 3a6:	cd bf       	out	0x3d, r28	; 61
+	preset();
+ 3a8:	5a de       	rcall	.-844    	; 0x5e <preset>
+	timer0_init();
+ 3aa:	63 de       	rcall	.-826    	; 0x72 <timer0_init>
+	int give_ball0 = 1, give_ball1 = 1, give_ball2 = 1, give_ball3 = 1, give_ball4 = 1;
+ 3ac:	81 e0       	ldi	r24, 0x01	; 1
+ 3ae:	90 e0       	ldi	r25, 0x00	; 0
+ 3b0:	9a 83       	std	Y+2, r25	; 0x02
+ 3b2:	89 83       	std	Y+1, r24	; 0x01
+ 3b4:	9c 83       	std	Y+4, r25	; 0x04
+ 3b6:	8b 83       	std	Y+3, r24	; 0x03
+ 3b8:	9e 83       	std	Y+6, r25	; 0x06
+ 3ba:	8d 83       	std	Y+5, r24	; 0x05
+ 3bc:	98 87       	std	Y+8, r25	; 0x08
+ 3be:	8f 83       	std	Y+7, r24	; 0x07
+ 3c0:	9a 87       	std	Y+10, r25	; 0x0a
+ 3c2:	89 87       	std	Y+9, r24	; 0x09
+	int give_map = 1;
+	int is_working = 0;
+	int number11 = 5, number12 = 7;
+	int switcher11 = 1, switcher12 = 1;
+ 3c4:	9c 87       	std	Y+12, r25	; 0x0c
+ 3c6:	8b 87       	std	Y+11, r24	; 0x0b
+ 3c8:	9e 87       	std	Y+14, r25	; 0x0e
+ 3ca:	8d 87       	std	Y+13, r24	; 0x0d
+	
+	PORTC |= (1<<PINC3);//фейковая дверь заперта
+ 3cc:	ab 9a       	sbi	0x15, 3	; 21
+{
+	preset();
+	timer0_init();
+	int give_ball0 = 1, give_ball1 = 1, give_ball2 = 1, give_ball3 = 1, give_ball4 = 1;
+	int give_map = 1;
+	int is_working = 0;
+ 3ce:	e1 2c       	mov	r14, r1
+ 3d0:	f1 2c       	mov	r15, r1
+int main (void)
+{
+	preset();
+	timer0_init();
+	int give_ball0 = 1, give_ball1 = 1, give_ball2 = 1, give_ball3 = 1, give_ball4 = 1;
+	int give_map = 1;
+ 3d2:	aa 24       	eor	r10, r10
+ 3d4:	a3 94       	inc	r10
+ 3d6:	b1 2c       	mov	r11, r1
+					give_map = 0;
+					PORTD |= (1<<PIND1);//поднять заслонку
+					_delay_ms(300);
+					PORTD &= ~(1<<PIND1);//убрать питание с центрального замка
+					PORTB &= ~(1<<PINB6);//LED_strip_OFF
+					DDRB = 0x00;
+ 3d8:	cc 24       	eor	r12, r12
+ 3da:	c3 94       	inc	r12
+ 3dc:	d1 2c       	mov	r13, r1
+			}
+			
+			if (!(PINB & (1<<1)) && !(PINB & (1<<2)) && !(PINB & (1<<3)) && !(PINB & (1<<4))) {
+				
+				if (give_map == 1) {
+					give_map = 0;
+ 3de:	71 2c       	mov	r7, r1
+ 3e0:	81 2c       	mov	r8, r1
+	//asm("sei");
+	sei();
+}
+
+void down(){
+	cycle_compl = true;
+ 3e2:	99 24       	eor	r9, r9
+ 3e4:	93 94       	inc	r9
+ 3e6:	14 c0       	rjmp	.+40     	; 0x410 <__FUSE_REGION_LENGTH__+0x10>
+ 3e8:	ec 2c       	mov	r14, r12
+ 3ea:	fd 2c       	mov	r15, r13
+ 3ec:	11 c0       	rjmp	.+34     	; 0x410 <__FUSE_REGION_LENGTH__+0x10>
+ 3ee:	ec 2c       	mov	r14, r12
+ 3f0:	fd 2c       	mov	r15, r13
+ 3f2:	0e c0       	rjmp	.+28     	; 0x410 <__FUSE_REGION_LENGTH__+0x10>
+ 3f4:	ec 2c       	mov	r14, r12
+ 3f6:	fd 2c       	mov	r15, r13
+ 3f8:	0b c0       	rjmp	.+22     	; 0x410 <__FUSE_REGION_LENGTH__+0x10>
+ 3fa:	ec 2c       	mov	r14, r12
+ 3fc:	fd 2c       	mov	r15, r13
+ 3fe:	08 c0       	rjmp	.+16     	; 0x410 <__FUSE_REGION_LENGTH__+0x10>
+ 400:	ec 2c       	mov	r14, r12
+ 402:	fd 2c       	mov	r15, r13
+ 404:	05 c0       	rjmp	.+10     	; 0x410 <__FUSE_REGION_LENGTH__+0x10>
+ 406:	ec 2c       	mov	r14, r12
+ 408:	fd 2c       	mov	r15, r13
+ 40a:	02 c0       	rjmp	.+4      	; 0x410 <__FUSE_REGION_LENGTH__+0x10>
+ 40c:	ec 2c       	mov	r14, r12
+ 40e:	fd 2c       	mov	r15, r13
+	int switcher11 = 1, switcher12 = 1;
+	
+	PORTC |= (1<<PINC3);//фейковая дверь заперта
+	
+	while(1){
+		if (door){	
+ 410:	80 91 60 00 	lds	r24, 0x0060
+ 414:	88 23       	and	r24, r24
+ 416:	d9 f0       	breq	.+54     	; 0x44e <__FUSE_REGION_LENGTH__+0x4e>
+			if (two_sec) {
+ 418:	80 91 65 00 	lds	r24, 0x0065
+ 41c:	88 23       	and	r24, r24
+ 41e:	11 f0       	breq	.+4      	; 0x424 <__FUSE_REGION_LENGTH__+0x24>
+				//PORTB &= ~(1<<PINB7);
+				PORTC &= ~(1<<PINC2);//тушим светодиод во время двухсекундной паузы
+ 420:	aa 98       	cbi	0x15, 2	; 21
+				continue;
+ 422:	f6 cf       	rjmp	.-20     	; 0x410 <__FUSE_REGION_LENGTH__+0x10>
+			}
+			//PORTB |= (1<<PINB7);
+			if (!(PINC & (1<<1))) {
+ 424:	99 99       	sbic	0x13, 1	; 19
+ 426:	08 c0       	rjmp	.+16     	; 0x438 <__FUSE_REGION_LENGTH__+0x38>
+ 428:	8b e4       	ldi	r24, 0x4B	; 75
+ 42a:	9d e1       	ldi	r25, 0x1D	; 29
+ 42c:	01 97       	sbiw	r24, 0x01	; 1
+ 42e:	f1 f7       	brne	.-4      	; 0x42c <__FUSE_REGION_LENGTH__+0x2c>
+ 430:	00 c0       	rjmp	.+0      	; 0x432 <__FUSE_REGION_LENGTH__+0x32>
+ 432:	00 00       	nop
+				_delay_ms(30);
+				if (!(PINC & (1<<1))) {
+ 434:	99 9b       	sbis	0x13, 1	; 19
+					up();
+ 436:	23 de       	rcall	.-954    	; 0x7e <up>
+				}
+			}
+			if (!(PINC & (1<<0))) {
+ 438:	98 99       	sbic	0x13, 0	; 19
+ 43a:	09 c0       	rjmp	.+18     	; 0x44e <__FUSE_REGION_LENGTH__+0x4e>
+ 43c:	8b e4       	ldi	r24, 0x4B	; 75
+ 43e:	9d e1       	ldi	r25, 0x1D	; 29
+ 440:	01 97       	sbiw	r24, 0x01	; 1
+ 442:	f1 f7       	brne	.-4      	; 0x440 <__FUSE_REGION_LENGTH__+0x40>
+ 444:	00 c0       	rjmp	.+0      	; 0x446 <__FUSE_REGION_LENGTH__+0x46>
+ 446:	00 00       	nop
+				_delay_ms(30);
+				if (!(PINC & (1<<0))) {
+ 448:	98 9b       	sbis	0x13, 0	; 19
+	//asm("sei");
+	sei();
+}
+
+void down(){
+	cycle_compl = true;
+ 44a:	90 92 68 00 	sts	0x0068, r9
+					down();
+				}
+			}
+		}
+		
+		number(number11, &switcher11, &PINB, &PORTC, PINC5);
+ 44e:	05 e0       	ldi	r16, 0x05	; 5
+ 450:	10 e0       	ldi	r17, 0x00	; 0
+ 452:	25 e3       	ldi	r18, 0x35	; 53
+ 454:	30 e0       	ldi	r19, 0x00	; 0
+ 456:	46 e3       	ldi	r20, 0x36	; 54
+ 458:	50 e0       	ldi	r21, 0x00	; 0
+ 45a:	be 01       	movw	r22, r28
+ 45c:	65 5f       	subi	r22, 0xF5	; 245
+ 45e:	7f 4f       	sbci	r23, 0xFF	; 255
+ 460:	85 e0       	ldi	r24, 0x05	; 5
+ 462:	90 e0       	ldi	r25, 0x00	; 0
+ 464:	4f df       	rcall	.-354    	; 0x304 <number>
+		number(number12, &switcher12, &PINB, &PORTC, PINC4);
+ 466:	04 e0       	ldi	r16, 0x04	; 4
+ 468:	10 e0       	ldi	r17, 0x00	; 0
+ 46a:	25 e3       	ldi	r18, 0x35	; 53
+ 46c:	30 e0       	ldi	r19, 0x00	; 0
+ 46e:	46 e3       	ldi	r20, 0x36	; 54
+ 470:	50 e0       	ldi	r21, 0x00	; 0
+ 472:	be 01       	movw	r22, r28
+ 474:	63 5f       	subi	r22, 0xF3	; 243
+ 476:	7f 4f       	sbci	r23, 0xFF	; 255
+ 478:	87 e0       	ldi	r24, 0x07	; 7
+ 47a:	90 e0       	ldi	r25, 0x00	; 0
+ 47c:	43 df       	rcall	.-378    	; 0x304 <number>
+		
+		if (PINB & (1<<0)) {
+ 47e:	b0 99       	sbic	0x16, 0	; 22
+ 480:	04 c0       	rjmp	.+8      	; 0x48a <__stack+0x2b>
+			is_working = 1;
+		}
+		if (is_working == 1 && !(PINC & (1<<4)) && !(PINC & (1<<5))) {
+ 482:	91 e0       	ldi	r25, 0x01	; 1
+ 484:	e9 16       	cp	r14, r25
+ 486:	f1 04       	cpc	r15, r1
+ 488:	19 f6       	brne	.-122    	; 0x410 <__FUSE_REGION_LENGTH__+0x10>
+ 48a:	9c 99       	sbic	0x13, 4	; 19
+ 48c:	ad cf       	rjmp	.-166    	; 0x3e8 <main+0x54>
+ 48e:	9d 99       	sbic	0x13, 5	; 19
+ 490:	ae cf       	rjmp	.-164    	; 0x3ee <main+0x5a>
+			PORTB |= (1 << PINB6);//LED_strip_ON
+ 492:	c6 9a       	sbi	0x18, 6	; 24
+			give_next_ball(&give_ball0, 35);
+ 494:	63 e2       	ldi	r22, 0x23	; 35
+ 496:	70 e0       	ldi	r23, 0x00	; 0
+ 498:	ce 01       	movw	r24, r28
+ 49a:	01 96       	adiw	r24, 0x01	; 1
+ 49c:	07 df       	rcall	.-498    	; 0x2ac <give_next_ball>
+			if (!(PINB & (1<<1))) {
+ 49e:	b1 99       	sbic	0x16, 1	; 22
+ 4a0:	05 c0       	rjmp	.+10     	; 0x4ac <__stack+0x4d>
+				give_next_ball(&give_ball1, 27);
+ 4a2:	6b e1       	ldi	r22, 0x1B	; 27
+ 4a4:	70 e0       	ldi	r23, 0x00	; 0
+ 4a6:	ce 01       	movw	r24, r28
+ 4a8:	03 96       	adiw	r24, 0x03	; 3
+ 4aa:	00 df       	rcall	.-512    	; 0x2ac <give_next_ball>
+			}
+			if (!(PINB & (1<<2))) {
+ 4ac:	b2 99       	sbic	0x16, 2	; 22
+ 4ae:	05 c0       	rjmp	.+10     	; 0x4ba <__stack+0x5b>
+				give_next_ball(&give_ball2, 27);
+ 4b0:	6b e1       	ldi	r22, 0x1B	; 27
+ 4b2:	70 e0       	ldi	r23, 0x00	; 0
+ 4b4:	ce 01       	movw	r24, r28
+ 4b6:	05 96       	adiw	r24, 0x05	; 5
+ 4b8:	f9 de       	rcall	.-526    	; 0x2ac <give_next_ball>
+			}
+			if (!(PINB & (1<<3))) {
+ 4ba:	b3 99       	sbic	0x16, 3	; 22
+ 4bc:	05 c0       	rjmp	.+10     	; 0x4c8 <__stack+0x69>
+				give_next_ball(&give_ball3, 27);
+ 4be:	6b e1       	ldi	r22, 0x1B	; 27
+ 4c0:	70 e0       	ldi	r23, 0x00	; 0
+ 4c2:	ce 01       	movw	r24, r28
+ 4c4:	07 96       	adiw	r24, 0x07	; 7
+ 4c6:	f2 de       	rcall	.-540    	; 0x2ac <give_next_ball>
+			}
+			if (!(PINB & (1<<4))) {
+ 4c8:	b4 99       	sbic	0x16, 4	; 22
+ 4ca:	05 c0       	rjmp	.+10     	; 0x4d6 <__stack+0x77>
+				give_next_ball(&give_ball4, 27);
+ 4cc:	6b e1       	ldi	r22, 0x1B	; 27
+ 4ce:	70 e0       	ldi	r23, 0x00	; 0
+ 4d0:	ce 01       	movw	r24, r28
+ 4d2:	09 96       	adiw	r24, 0x09	; 9
+ 4d4:	eb de       	rcall	.-554    	; 0x2ac <give_next_ball>
+			}
+			
+			if (!(PINB & (1<<1)) && !(PINB & (1<<2)) && !(PINB & (1<<3)) && !(PINB & (1<<4))) {
+ 4d6:	b1 99       	sbic	0x16, 1	; 22
+ 4d8:	8d cf       	rjmp	.-230    	; 0x3f4 <main+0x60>
+ 4da:	b2 99       	sbic	0x16, 2	; 22
+ 4dc:	8e cf       	rjmp	.-228    	; 0x3fa <main+0x66>
+ 4de:	b3 99       	sbic	0x16, 3	; 22
+ 4e0:	8f cf       	rjmp	.-226    	; 0x400 <__FUSE_REGION_LENGTH__>
+ 4e2:	b4 99       	sbic	0x16, 4	; 22
+ 4e4:	90 cf       	rjmp	.-224    	; 0x406 <__FUSE_REGION_LENGTH__+0x6>
+				
+				if (give_map == 1) {
+ 4e6:	21 e0       	ldi	r18, 0x01	; 1
+ 4e8:	a2 16       	cp	r10, r18
+ 4ea:	b1 04       	cpc	r11, r1
+ 4ec:	09 f0       	breq	.+2      	; 0x4f0 <__stack+0x91>
+ 4ee:	8e cf       	rjmp	.-228    	; 0x40c <__FUSE_REGION_LENGTH__+0xc>
+					give_map = 0;
+					PORTD |= (1<<PIND1);//поднять заслонку
+ 4f0:	91 9a       	sbi	0x12, 1	; 18
+ 4f2:	8f e5       	ldi	r24, 0x5F	; 95
+ 4f4:	9a ee       	ldi	r25, 0xEA	; 234
+ 4f6:	20 e0       	ldi	r18, 0x00	; 0
+ 4f8:	81 50       	subi	r24, 0x01	; 1
+ 4fa:	90 40       	sbci	r25, 0x00	; 0
+ 4fc:	20 40       	sbci	r18, 0x00	; 0
+ 4fe:	e1 f7       	brne	.-8      	; 0x4f8 <__stack+0x99>
+ 500:	00 c0       	rjmp	.+0      	; 0x502 <__stack+0xa3>
+ 502:	00 00       	nop
+					_delay_ms(300);
+					PORTD &= ~(1<<PIND1);//убрать питание с центрального замка
+ 504:	91 98       	cbi	0x12, 1	; 18
+					PORTB &= ~(1<<PINB6);//LED_strip_OFF
+ 506:	c6 98       	cbi	0x18, 6	; 24
+					DDRB = 0x00;
+ 508:	17 ba       	out	0x17, r1	; 23
+ 50a:	ec 2c       	mov	r14, r12
+ 50c:	fd 2c       	mov	r15, r13
+			}
+			
+			if (!(PINB & (1<<1)) && !(PINB & (1<<2)) && !(PINB & (1<<3)) && !(PINB & (1<<4))) {
+				
+				if (give_map == 1) {
+					give_map = 0;
+ 50e:	a7 2c       	mov	r10, r7
+ 510:	b8 2c       	mov	r11, r8
+ 512:	7e cf       	rjmp	.-260    	; 0x410 <__FUSE_REGION_LENGTH__+0x10>
+
+00000514 <__umulhisi3>:
+ 514:	a2 9f       	mul	r26, r18
+ 516:	b0 01       	movw	r22, r0
+ 518:	b3 9f       	mul	r27, r19
+ 51a:	c0 01       	movw	r24, r0
+ 51c:	a3 9f       	mul	r26, r19
+ 51e:	01 d0       	rcall	.+2      	; 0x522 <__umulhisi3+0xe>
+ 520:	b2 9f       	mul	r27, r18
+ 522:	70 0d       	add	r23, r0
+ 524:	81 1d       	adc	r24, r1
+ 526:	11 24       	eor	r1, r1
+ 528:	91 1d       	adc	r25, r1
+ 52a:	08 95       	ret
+
+0000052c <_exit>:
+ 52c:	f8 94       	cli
+
+0000052e <__stop_program>:
+ 52e:	ff cf       	rjmp	.-2      	; 0x52e <__stop_program>
